@@ -22,6 +22,7 @@ interface WikiData {
 type CollatedData = WikiData & Achievement;
 
 const Body = () => {
+    const [loaded, setLoaded] = useState<boolean>(false);
     const [collatedData, setCollatedData] = useState<CollatedData[]>([]);
     const [filter, showFilter] = useState<boolean>(false);
     const [filters, addFilters] = useState<string[]>([]);
@@ -30,19 +31,22 @@ const Body = () => {
     const [completed, setCompleted] = useState<number>(0);
     const filterButtons = ["completed", "waiting"];
     const paginationButtons = [10, 20, 50];
+
+    const [pages, setPages] = useState<any>({});
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [currentPageData, setCurrentPageData] = useState<CollatedData[]>([]);
 
     useEffect(() => {
         const getAchievements = async () => {
             const response = await fetch(
-                `http://localhost:8080/api/steam/achieve?userId=76561198065815181&gameId=250900`
+                `http://dev.benweare.co.uk/api/steam/achieve?userId=76561198065815181&gameId=250900`
             )
                 .then((res) => res.json())
-                .then((res) => {
+                .then(({ response }) => {
+                    setLoaded(true);
                     return {
-                        steam: res.achievements,
-                        wiki: res.wiki,
+                        steam: response.achievements,
+                        wiki: response.wiki,
                     };
                 });
 
@@ -116,16 +120,24 @@ const Body = () => {
         if (filters.length === 0) {
             return setFilteredData(collatedData);
         }
+
         return setFilteredData(filteredItems);
     }, [filters, collatedData]);
 
     useEffect(() => {
-        console.log(Math.ceil(filteredData.length / pagination));
-
-        setCurrentPageData(filteredData.slice(currentPage, pagination));
-    }, [filteredData.length, pagination]);
+        const totalPages = Math.ceil(filteredData.length / pagination);
+        const pages: any = {};
+        for (let i = 0; i < totalPages; i++) {
+            const start = i * pagination;
+            const end = start + pagination;
+            pages[i] = filteredData.slice(start, end);
+        }
+        setPages(pages);
+        setCurrentPageData(pages[currentPage]);
+    }, [collatedData, filteredData, pagination, currentPage]);
 
     const handleFilters = (filter: string) => {
+        setCurrentPage(0);
         if (filters.includes(filter)) {
             return addFilters((filters) => filters.filter((f) => f !== filter));
         }
@@ -133,10 +145,23 @@ const Body = () => {
     };
 
     const handlePagination = (perPage: number) => {
+        setCurrentPage(0);
         if (pagination === perPage) {
             return setPagination(filteredData.length);
         }
         return setPagination(perPage);
+    };
+
+    const handleChangePage = (pageValue: number) => {
+        if (pageValue < 0) {
+            return setCurrentPage(0);
+        }
+
+        if (pageValue >= Object.keys(pages).length) {
+            return setCurrentPage(Object.keys(pages).length - 1);
+        }
+
+        return setCurrentPage(pageValue);
     };
 
     const Achieved = (value: number) =>
@@ -185,9 +210,52 @@ const Body = () => {
             </svg>
         );
 
+    const PaginationFeature = () => {
+        if (loaded) {
+            return (
+                <div className="flex justify-around my-4 ">
+                    <button
+                        onClick={() => handleChangePage(currentPage - 1)}
+                        className="border w-24 rounded-l-sm border-blue-500 text-blue-500 hover:bg-blue-700 hover:text-blue-100"
+                    >
+                        Back
+                    </button>
+                    <div className="border-b border-t w-full border-slate-500 text-slate-500 hover:bg-slate-100 flex">
+                        {Object.keys(pages).map((key, index) => {
+                            if (
+                                currentPage < index + 6 &&
+                                currentPage > index - 6
+                            ) {
+                                return (
+                                    <button
+                                        onClick={() => handleChangePage(index)}
+                                        className={`w-full text-center ${
+                                            currentPage === index
+                                                ? "bg-blue-500 text-blue-100 shadow-inner hover:bg-blue-700"
+                                                : ""
+                                        }`}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                );
+                            }
+                        })}
+                    </div>
+                    <button
+                        onClick={() => handleChangePage(currentPage + 1)}
+                        className="border w-24 rounded-r-sm border-blue-500 text-blue-500 hover:bg-blue-700 hover:text-blue-100"
+                    >
+                        Next
+                    </button>
+                </div>
+            );
+        }
+        return null;
+    };
+
     return (
         <div className="h-full flex flex-col divide-y bg-slate-100 justify-center items-center mt-12">
-            <div className="min-w-fit h-full overflow-auto">
+            <div className="w-3/4 h-full overflow-auto ">
                 <div>
                     <div className="p-5 text-left flex flex-col">
                         <h1 className="text-2xl uppercase leading-tight mb-2">
@@ -221,6 +289,7 @@ const Body = () => {
                                 </button>
                                 {filters.map((button) => (
                                     <button
+                                        key={`${button}`}
                                         onClick={() => handleFilters(button)}
                                         className="ml-2 border flex justify-between items-center w-24 rounded-xl pl-2 border-purple-500 text-purple-500 hover:bg-red-600 hover:text-red-100 hover:border-red-600"
                                     >
@@ -280,79 +349,129 @@ const Body = () => {
                                     className="border rounded-md w-full mb-3 px-2 p-1"
                                     placeholder="search"
                                 />
-                                <div className="grid grid-rows-3 grid-cols-2 gap-2">
-                                    {filterButtons.map((button) => (
-                                        <button
-                                            onClick={() =>
-                                                handleFilters(button)
-                                            }
-                                            className={`border w-24 rounded-xl px-2 ${
-                                                !filters.includes(button)
-                                                    ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
-                                                    : "border-red-500 text-red-500 hover:bg-red-600 hover:text-red-100"
-                                            } `}
-                                        >
-                                            {button}
-                                        </button>
-                                    ))}
-                                    {paginationButtons.map((perPage) => (
-                                        <button
-                                            onClick={() =>
-                                                handlePagination(perPage)
-                                            }
-                                            className={`border w-24 rounded-xl px-2 ${
-                                                pagination === perPage
-                                                    ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
-                                                    : "border-red-500 text-red-500 hover:bg-red-600 hover:text-red-100"
-                                            } `}
-                                        >
-                                            {perPage}
-                                        </button>
-                                    ))}
+                                <div className="">
+                                    <p className="ml-1">Options</p>
+                                    <hr className="mb-2" />
+                                    <div className="grid grid-rows-auto grid-cols-2 gap-2">
+                                        {filterButtons.map((button) => (
+                                            <button
+                                                key={`${button}-filters`}
+                                                onClick={() =>
+                                                    handleFilters(button)
+                                                }
+                                                className={`border w-24 rounded-xl px-2 ${
+                                                    filters.includes(button)
+                                                        ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
+                                                        : "border-red-500 text-red-500 hover:bg-red-600 hover:text-red-100"
+                                                } `}
+                                            >
+                                                {button}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <p className="ml-1 mt-2">Items per Page</p>
+                                    <hr className="mb-2" />
+                                    <div className="grid grid-rows-3 grid-cols-2 gap-2">
+                                        {paginationButtons.map((perPage) => (
+                                            <button
+                                                key={`${perPage}-pagination`}
+                                                onClick={() =>
+                                                    handlePagination(perPage)
+                                                }
+                                                className={`border w-24 rounded-xl px-2 ${
+                                                    pagination === perPage
+                                                        ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
+                                                        : "border-red-500 text-red-500 hover:bg-red-600 hover:text-red-100"
+                                                } `}
+                                            >
+                                                {perPage}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="">
-                        <span className="p-2 text-xs">
-                            Showing {filteredData.length} out of{" "}
-                            {collatedData.length} items.
-                        </span>
-                        <div className="flex flex-col">
+                        <div>
                             <span className="p-2 text-xs">
-                                Completed {completed}%
+                                Showing {pagination} out of{" "}
+                                {filteredData.length} items.
                             </span>
-                            <input
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={completed}
-                                className="slider w-full overflow-none"
-                            />
+                            <div className="flex flex-col">
+                                <span className="p-2 text-xs">
+                                    {loaded
+                                        ? `Completed ${completed}%`
+                                        : "Calculating Completion..."}
+                                </span>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    value={completed}
+                                    readOnly
+                                    className="slider w-full overflow-none"
+                                />
+                            </div>
                         </div>
+                        <PaginationFeature />
                         <div className="">
-                            {currentPageData.map((data) => (
-                                <div className="bg-white rounded-lg shadow-sm divide-x flex flex-row w-full text-left my-2">
-                                    <p className="w-16 p-2 self-start">
-                                        <img
-                                            className="rounded-sm"
-                                            alt={`${data.apiname}-${data.displayName}`}
-                                            src={data.icon}
-                                        />
-                                    </p>
-                                    <p className="min-w-56 w-56 p-2">
-                                        {data.displayName}
-                                    </p>
-                                    <p className="min-w-56 w-full p-2">
-                                        {data.helper}
-                                    </p>
-                                    <p className="w-12 p-2 flex justify-center items-center">
-                                        {Achieved(data.achieved)}
-                                    </p>
+                            {loaded ? (
+                                currentPageData &&
+                                currentPageData.map((data) => (
+                                    <div
+                                        key={`${data.displayName}-pagination-${data.name}`}
+                                        className="bg-white rounded-lg shadow-sm divide-x flex flex-row w-full text-left my-2 h-16"
+                                    >
+                                        <p className="w-16 p-2 flex justify-center items-center">
+                                            <img
+                                                className="rounded-sm"
+                                                alt={`${data.apiname}-${data.displayName}`}
+                                                src={data.icon}
+                                            />
+                                        </p>
+                                        <p className="min-w-56 flex justify-start items-center w-56 p-2">
+                                            {data.displayName}
+                                        </p>
+                                        <p className="min-w-56 w-full p-2 overflow-auto">
+                                            {data.helper}
+                                        </p>
+                                        <p className="w-12 p-2 flex justify-center items-center">
+                                            {Achieved(data.achieved)}
+                                        </p>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="w-full flex my-4">
+                                    <div className="w-full inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-full border border-blue-500 text-blue-600 transition ease-in-out duration-150 cursor-not-allowed">
+                                        <svg
+                                            className="animate-spin -ml-1 mr-3 h-6 w-6 text-blue-500"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            ></circle>
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                            ></path>
+                                        </svg>
+                                        Loading Achievements... This may take a
+                                        moment!
+                                    </div>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </div>
+                    <PaginationFeature />
                 </div>
             </div>
         </div>
