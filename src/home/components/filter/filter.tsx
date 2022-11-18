@@ -1,4 +1,4 @@
-import type { FilterComponent, Filters } from "@types";
+import type { CollatedData, FilterComponent, Filters } from "@types";
 import { createRef, useEffect, useState } from "react";
 
 import { ExternalClickHandler } from "../../../hooks/externalClickHandler";
@@ -14,19 +14,17 @@ const Filter = ({
     const [filter, showFilter] = useState<boolean>(false);
 
     useEffect(() => {
-        let filteredItems: any = [];
+        let filteredItems: CollatedData[] = [...collatedData];
         const { collection, query } = filters;
         switch (true) {
             case collection.includes("completed"):
                 filteredItems = [
-                    ...filteredItems,
-                    ...collatedData.filter(({ achieved }) => achieved === 1),
+                    ...filteredItems.filter(({ achieved }) => achieved === 1),
                 ];
                 break;
             case collection.includes("waiting"):
                 filteredItems = [
-                    ...filteredItems,
-                    ...collatedData.filter(({ achieved }) => achieved === 0),
+                    ...filteredItems.filter(({ achieved }) => achieved === 0),
                 ];
                 break;
             default:
@@ -36,18 +34,14 @@ const Filter = ({
         if (query) {
             const find = new RegExp(`${query}`, "gi");
             filteredItems = [
-                ...filteredItems,
-                ...collatedData.filter(
+                ...filteredItems.filter(
                     ({ displayName, helper }) =>
                         displayName.match(find) || helper.match(find)
                 ),
             ];
         }
 
-        if (filteredItems.length !== 0) {
-            return setFilteredData(filteredItems);
-        }
-        return setFilteredData(collatedData);
+        return setFilteredData(filteredItems);
     }, [filters, setFilteredData, collatedData]);
 
     const handleFilters = (filter: string) => {
@@ -98,7 +92,7 @@ const Filter = ({
 
     return (
         <div
-            className="text-xs uppercase font-medium flex items-center w-auto"
+            className="text-xs font-medium flex items-center w-auto"
             ref={filterElement}
         >
             <div className="flex flex-row">
@@ -205,7 +199,7 @@ const Filter = ({
             </div>
             <div
                 hidden={!filter}
-                className="absolute top-7 dark:border dark:border-blue-400 bg-white dark:bg-slate-900 rounded-lg shadow p-4"
+                className="absolute top-32 text-sm my-2 border dark:border-blue-400 bg-white dark:bg-slate-900 rounded-lg shadow p-4 z-20"
             >
                 <input
                     className="border rounded-md w-full mb-3 px-2 p-1 dark:bg-slate-800 dark:text-white"
@@ -218,7 +212,6 @@ const Filter = ({
                     }
                 />
                 <div className="">
-                    <p className="ml-1">Options</p>
                     <hr className="mb-2" />
                     <div className="grid grid-rows-auto grid-cols-2 gap-2">
                         {filters.collectionOpts.map((button) => (
@@ -235,8 +228,7 @@ const Filter = ({
                             </button>
                         ))}
                     </div>
-                    <p className="ml-1 mt-2">Items per Page</p>
-                    <hr className="mb-2" />
+                    <hr className="my-2" />
                     <div className="grid grid-rows-3 grid-cols-2 gap-2">
                         {filters.paginationOpts.map((perPage) => (
                             <button

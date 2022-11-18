@@ -1,13 +1,15 @@
-import Achieved from "../achieved/achieved";
+import { StatusChecker } from "../common/common";
 import type { TableComponent } from "@types";
+import { invoke } from "@tauri-apps/api";
 
-const Table = ({
-    stage,
-    currentPageData,
-    wikiOpen,
-    setWikiOpen,
-}: TableComponent) => {
-    const bindingOfIsaacWikiUrl = "https://bindingofisaacrebirth.fandom.com/";
+const Table = ({ stage, currentPageData }: TableComponent) => {
+    const bindingOfIsaacWikiUrl = "https://bindingofisaacrebirth.fandom.com";
+
+    const browse = async (extension: string) => {
+        await invoke("open_browser", {
+            siteName: `${bindingOfIsaacWikiUrl}${extension}`,
+        });
+    };
 
     if (stage > 0) {
         return (
@@ -20,29 +22,30 @@ const Table = ({
                                 data.name
                             }-${new Date().toISOString()}`}
                         >
-                            <a
-                                onClick={() => setWikiOpen(!wikiOpen)}
-                                href={`${bindingOfIsaacWikiUrl}${data.url}`}
-                                target="wikiOpener"
-                                className="group-hover:scale-105 transition-transform duration-150 ease-in-out bg-white dark:bg-slate-900 group-hover:dark:bg-slate-700 rounded-lg shadow-sm divide-x dark:divide-slate-700 hover:dark:divide-slate-900 flex flex-row w-full text-left my-2 h-16 text-slate-900  dark:text-white"
+                            <button
+                                onClick={() => browse(data.url)}
+                                className={`${
+                                    data.url &&
+                                    "group-hover:scale-105 group-hover:dark:bg-slate-700 hover:dark:divide-slate-900"
+                                } transition-transform duration-150 ease-in-out bg-white dark:bg-slate-900 rounded-lg shadow-sm divide-x dark:divide-slate-700 flex flex-row w-full text-left my-2 h-16 text-slate-900 dark:text-white`}
                             >
-                                <p className="w-16 p-2 flex justify-center items-center">
+                                <p className="w-16 p-2 flex justify-center items-center h-full">
                                     <img
                                         className="rounded-sm"
                                         alt={`${data.apiname}-${data.displayName}`}
                                         src={data.icon}
                                     />
                                 </p>
-                                <p className="min-w-56 flex justify-start items-center w-56 p-2">
+                                <p className="min-w-56 flex justify-start items-center w-56 p-2 h-full">
                                     {data.displayName}
                                 </p>
-                                <p className="min-w-56 w-full p-2 overflow-auto">
+                                <p className="min-w-56 w-full p-2 overflow-auto h-full">
                                     {data.helper}
                                 </p>
-                                <p className="w-12 p-2 flex justify-center items-center">
-                                    <Achieved {...{ ...data }} />
+                                <p className="w-12 p-2 flex justify-center items-center h-full">
+                                    <StatusChecker status={!!data.achieved} />
                                 </p>
-                            </a>
+                            </button>
                         </div>
                     ))}
             </>

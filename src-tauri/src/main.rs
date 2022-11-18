@@ -8,10 +8,12 @@ use std::fs::File;
 use std::path::Path;
 use std::io::prelude::*;
 use std::io;
+use webbrowser;
+
 
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![write_file, read_file, remove_file, file_exists])
+    .invoke_handler(tauri::generate_handler![write_file, read_file, remove_file, file_exists, open_browser])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -72,5 +74,20 @@ fn file_exists(file_name: &str) -> bool {
       Err(_) => false
     }
 }
+
+#[tauri::command]
+fn open_browser(site_name: &str) -> bool {
+  let browse = || -> Result<bool, io::Error> {
+    webbrowser::open(site_name)?;
+    Ok(true)
+  };
+
+  match browse() {
+    Ok(_) => true,
+    Err(_) => false
+  }
+
+}
+
 
 

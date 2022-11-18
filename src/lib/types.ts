@@ -4,8 +4,6 @@
 export interface TableComponent {
     stage: number;
     currentPageData: CollatedData[];
-    wikiOpen: boolean;
-    setWikiOpen: Function;
 }
 
 export interface WikiComponent {
@@ -16,6 +14,7 @@ export interface WikiComponent {
 export interface StatisticsComponent {
     stage: number;
     collatedData: CollatedData[];
+    credentials: Credentials;
 }
 
 export interface PaginationComponent {
@@ -42,8 +41,9 @@ export interface FilterComponent {
     setFilteredData: Function;
 }
 
-export interface AchievedComponent {
-    achieved: number;
+export interface StatusCheckerComponent {
+    status: boolean;
+    loading?: boolean;
 }
 
 export interface NavigatorComponent {
@@ -53,6 +53,15 @@ export interface NavigatorComponent {
 
 export interface MainComponent {
     credentials: Credentials;
+}
+
+export interface ErrorComponent {
+    credentials: Credentials;
+}
+
+export interface LoaderComponent {
+    stage: number;
+    message: string;
 }
 
 /**
@@ -109,7 +118,16 @@ export interface AccountDetails {
 }
 
 export interface Credentials {
-    steamApiKey: string;
-    steamUserId: string;
+    steamApiKey: string | undefined;
+    steamUserId: string | undefined;
     remember: boolean;
+}
+
+export interface ServiceStatus {
+    [key: string]: boolean;
+    loading: boolean;
+    api: boolean;
+    steamApi: boolean;
+    steamApiKey: boolean;
+    steamAccount: boolean;
 }

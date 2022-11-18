@@ -6,8 +6,8 @@ import { invoke } from "@tauri-apps/api";
 
 const App = () => {
     const [credentials, setCredentials] = useState<Credentials>({
-        steamApiKey: "",
-        steamUserId: "",
+        steamApiKey: undefined,
+        steamUserId: undefined,
         remember: false,
     });
 
@@ -32,7 +32,11 @@ const App = () => {
     return (
         <div className="h-full text-slate-800 dark:text-white ">
             <Navigator {...{ credentials, setCredentials }} />
-            <Main {...{ credentials }} />
+            <div className="h-full flex flex-col divide-y bg-slate-200 dark:bg-slate-800 justify-center items-center mt-12">
+                <div className="w-4/5 h-full overflow-visible ">
+                    <Main {...{ credentials }} />
+                </div>
+            </div>
         </div>
     );
 };

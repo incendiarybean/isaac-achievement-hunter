@@ -20,8 +20,8 @@
         "typescript": "^4.8.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "td": "tauri dev",
+        "react-dev": "react-scripts start",
+        "start": "tauri dev",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "tauri": "tauri"

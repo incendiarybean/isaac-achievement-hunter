@@ -61,7 +61,7 @@ export const Navigator = ({
                 <form
                     onSubmit={saveCredentials}
                     hidden={!account}
-                    className="absolute right-0 top-10 bg-white dark:bg-slate-900 rounded-md p-4 shadow mt-2 w-96 dark:border dark:border-blue-400"
+                    className="absolute right-0 top-10 bg-white dark:bg-slate-900 rounded-md p-4 shadow-sm z-50 mt-2 w-96 border dark:border-blue-400"
                 >
                     <h1 className="text-md font-medium">
                         Optional Credentials
@@ -126,7 +126,7 @@ export const Navigator = ({
                     <div className="flex flex-col">
                         <input
                             type="submit"
-                            className="uppercase text-sm my-2 w-full rounded-md border border-blue-400 px-4 text-blue-400 hover:text-white hover:bg-blue-600"
+                            className="cursor-pointer uppercase text-sm mt-4 p-1 w-full rounded-md border border-blue-400 px-4 text-blue-500 dark:text-blue-400 hover:text-white hover:bg-blue-600"
                             value="save"
                         />
                     </div>
