@@ -6,12 +6,28 @@ This app was designed to track Steam Achievements, with a simple UI and filter f
 
 This app uses the Binding of Isaac Wiki and 2 seperate Steam API endpoints to collate all the data into a single table.
 
-Example:
+### Example:
+
 ![Isaac Achievement UI](./public/app-appearance.png)
 
-## How to use?
+# Features
 
-### Simple usage:
+## Current Features
+
+-   Filter by Completed/Not Completed
+-   Displays completion indicator.
+-   Explains achievement unlock criteria.
+-   Click on achievement to open the related Wiki page.
+-   Displays percentage complete.
+-   Paginated by 10, 25, 50, all.
+
+## Planned Features
+
+-   None yet
+
+# How to use?
+
+## Simple usage:
 
 Firstly install the application from the msi file, then launch the application.
 
@@ -21,7 +37,7 @@ If you have a custom Steam URL, you may need to use a tool like Steam DB to get 
 
 > **OPTIONAL**: You can include your own Steam API key in the call, but this isn't required.
 
-### Custom usage:
+## Custom usage:
 
 You can run your own build of the application by using Git Clone and changing parts you want:
 
