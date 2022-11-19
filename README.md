@@ -6,6 +6,9 @@ This app was designed to track Steam Achievements, with a simple UI and filter f
 
 This app uses the Binding of Isaac Wiki and 2 seperate Steam API endpoints to collate all the data into a single table.
 
+Example:
+![Isaac Achievement UI](./public/app-appearance.png)
+
 ## How to use?
 
 ### Simple usage:
