@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+# Isaac Achievement Hunter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Who am I?
 
-## Available Scripts
+This app was designed to track Steam Achievements, with a simple UI and filter function.
 
-In the project directory, you can run:
+This app uses the Binding of Isaac Wiki and 2 seperate Steam API endpoints to collate all the data into a single table.
 
-### `npm start`
+## How to use?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Simple usage:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Firstly install the application from the msi file, then launch the application.
 
-### `npm test`
+For personalised results, you will require your Steam User ID. You can get this ID from your Steam profile's URL e.g. https://steamcommunity.com/profiles/{STEAM ID HERE}/.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If you have a custom Steam URL, you may need to use a tool like Steam DB to get your ID.
 
-### `npm run build`
+> **OPTIONAL**: You can include your own Steam API key in the call, but this isn't required.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Custom usage:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+You can run your own build of the application by using Git Clone and changing parts you want:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm start
+```
 
-### `npm run eject`
+This command runs a development server and functional application interface to develop on.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+npm run build
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This command builds the React application and creates an exectuable built by Tauri.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+> **Requirements**: Rust and all NPM dependencies must be installed, including Windows Dev tools with C++ Development tools.
