@@ -32,7 +32,7 @@ const App = () => {
     return (
         <div className="h-full text-slate-800 dark:text-white ">
             <Navigator {...{ credentials, setCredentials }} />
-            <div className="h-full flex flex-col divide-y bg-slate-200 dark:bg-slate-800 justify-center items-center mt-12">
+            <div className="h-full flex flex-col divide-y bg-slate-200 dark:bg-slate-800 justify-center items-center py-12">
                 <div className="w-4/5 h-full overflow-visible ">
                     <Main {...{ credentials }} />
                 </div>

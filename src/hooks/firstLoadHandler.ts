@@ -97,7 +97,7 @@ export const FirstLoadHandler = (credentials: Credentials) => {
             const params = new URLSearchParams(paramObject);
 
             const response = await fetch(
-                `http://localhost:8080/api/steam/achieve?gameId=250900&${params}`
+                `https://dev.benweare.co.uk/api/steam/achieve?gameId=250900&${params}`
             )
                 .then((res) => res.json())
                 .then(({ response }) => {

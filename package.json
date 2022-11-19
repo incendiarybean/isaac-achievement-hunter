@@ -21,10 +21,9 @@
     },
     "scripts": {
         "react-dev": "react-scripts start",
+        "react-build": "react-scripts build",
         "start": "tauri dev",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "tauri": "tauri"
+        "build": "tauri build"
     },
     "eslintConfig": {
         "extends": [
