@@ -1,4 +1,4 @@
-import { Main, Navigator } from "./home";
+import { Main, Navigator } from "./main";
 import { useEffect, useState } from "react";
 
 import { Credentials } from "@types";
