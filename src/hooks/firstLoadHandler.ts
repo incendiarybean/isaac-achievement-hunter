@@ -136,10 +136,6 @@ export const FirstLoadHandler = (credentials: Credentials) => {
             });
         };
 
-        setStatus({
-            stage: 0,
-            message: "Preparing Resources!",
-        });
         getAchievements();
     }, [credentials]);
 

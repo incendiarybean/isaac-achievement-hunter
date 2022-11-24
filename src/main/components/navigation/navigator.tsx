@@ -108,7 +108,7 @@ export const Navigator = ({
                                                         onSubmit={(e) =>
                                                             saveCredentials(e)
                                                         }
-                                                        className="top-12 right-0 p-4 z-40 rounded-l rounded-br shadow-xl bg-zinc-300 dark:bg-zinc-900 w-96"
+                                                        className="top-12 right-0 p-4 z-40 rounded shadow-xl bg-zinc-300 dark:bg-zinc-900 w-96"
                                                     >
                                                         <h1 className="">
                                                             Optional Credentials
