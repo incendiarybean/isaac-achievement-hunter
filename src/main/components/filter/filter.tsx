@@ -91,14 +91,13 @@ const Filter = ({
     ExternalClickHandler(filterElement, showFilter);
 
     return (
-        <div
-            className="text-xs font-medium flex items-center w-auto"
-            ref={filterElement}
-        >
-            <div className="flex flex-row">
+        <div className="text-xs font-medium flex items-center w-auto">
+            <div className="relative z-20 flex flex-row">
                 <button
                     onClick={() => showFilter(!filter)}
-                    className="text-xs uppercase font-medium flex items-center bg-white dark:bg-slate-900 dark:hover:bg-white dark:hover:text-slate-900 rounded-full px-2 shadow"
+                    className={`bg-white dark:bg-zinc-900 ${
+                        filter && "border-b border-sky-400 "
+                    } text-xs uppercase font-medium flex items-center  dark:hover:bg-white dark:hover:text-slate-900 rounded px-2 shadow`}
                 >
                     <span>Filter</span>
                     <svg
@@ -124,7 +123,7 @@ const Filter = ({
                     <button
                         key={`${button}`}
                         onClick={() => handleFilters(button)}
-                        className="ml-2 border flex justify-between items-center w-24 rounded-xl pl-2 border-blue-500 text-blue-500 dark:border-blue-300 dark:text-blue-300 hover:bg-red-600 hover:text-red-100 hover:border-red-600"
+                        className="ml-2 border flex justify-between items-center w-24 rounded pl-2 border-blue-500 text-blue-500 dark:border-blue-300 dark:text-blue-300 hover:bg-red-600 hover:text-red-100 hover:border-red-600"
                     >
                         <span className="">{button}</span>
                         <svg
@@ -149,7 +148,7 @@ const Filter = ({
                 {!!filters.pagination && (
                     <button
                         onClick={() => handlePagination(filters.pagination)}
-                        className="ml-2 border flex justify-between items-center w-24 rounded-xl pl-2 border-blue-500 text-blue-500 dark:border-blue-300 dark:text-blue-300 hover:bg-red-600 hover:text-red-100 hover:border-red-600"
+                        className="ml-2 border flex justify-between items-center w-24 rounded pl-2 border-blue-500 text-blue-500 dark:border-blue-300 dark:text-blue-300 hover:bg-red-600 hover:text-red-100 hover:border-red-600"
                     >
                         {filters.pagination}
                         <svg
@@ -174,7 +173,7 @@ const Filter = ({
                 {filters.query && (
                     <button
                         onClick={() => handleQuery(filters.query)}
-                        className="ml-2 border flex justify-between items-center w-24 rounded-xl pl-2 border-blue-500 text-blue-500 dark:border-blue-300 dark:text-blue-300 hover:bg-red-600 hover:text-red-100 hover:border-red-600"
+                        className="ml-2 border flex justify-between items-center w-24 rounded pl-2 border-blue-500 text-blue-500 dark:border-blue-300 dark:text-blue-300 hover:bg-red-600 hover:text-red-100 hover:border-red-600"
                     >
                         {filters.query}
                         <svg
@@ -196,53 +195,57 @@ const Filter = ({
                         </svg>
                     </button>
                 )}
-            </div>
-            <div
-                hidden={!filter}
-                className="absolute top-32 text-sm my-2 border dark:border-blue-400 bg-white dark:bg-slate-900 rounded-lg shadow p-4 z-20"
-            >
-                <input
-                    className="border rounded-md w-full mb-3 px-2 p-1 dark:bg-slate-800 dark:text-white"
-                    placeholder="search"
-                    onChange={({ target }) =>
-                        setFilters((filters: Filters) => ({
-                            ...filters,
-                            query: target.value,
-                        }))
-                    }
-                />
-                <div className="">
-                    <hr className="mb-2" />
-                    <div className="grid grid-rows-auto grid-cols-2 gap-2">
-                        {filters.collectionOpts.map((button) => (
-                            <button
-                                key={`${button}-filters`}
-                                onClick={() => handleFilters(button)}
-                                className={`border w-24 rounded-xl px-2 ${
-                                    filters.collection.includes(button)
-                                        ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
-                                        : "border-red-500 text-red-500 dark:border-red-400 dark:text-red-400 hover:bg-red-600 dark:hover:border-red-600 hover:text-red-100"
-                                } `}
-                            >
-                                {button}
-                            </button>
-                        ))}
-                    </div>
-                    <hr className="my-2" />
-                    <div className="grid grid-rows-3 grid-cols-2 gap-2">
-                        {filters.paginationOpts.map((perPage) => (
-                            <button
-                                key={`${perPage}-pagination`}
-                                onClick={() => handlePagination(perPage)}
-                                className={`border w-24 rounded-xl px-2 ${
-                                    filters.pagination === perPage
-                                        ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
-                                        : "border-red-500 text-red-500 hover:bg-red-600 dark:border-red-400 dark:text-red-400 dark:hover:border-red-600 hover:text-red-100"
-                                } `}
-                            >
-                                {perPage}
-                            </button>
-                        ))}
+                <div hidden={!filter} className="absolute top-5 w-full fade-in">
+                    <div
+                        ref={filterElement}
+                        className="text-sm my-2 bg-white dark:bg-zinc-900 rounded p-4 w-56 shadow"
+                    >
+                        <input
+                            className="border rounded w-full mb-3 px-2 p-1 dark:bg-slate-800 dark:text-white"
+                            placeholder="search"
+                            onChange={({ target }) =>
+                                setFilters((filters: Filters) => ({
+                                    ...filters,
+                                    query: target.value,
+                                }))
+                            }
+                        />
+                        <div className="">
+                            <hr className="mb-2" />
+                            <div className="grid grid-rows-auto grid-cols-2 gap-2">
+                                {filters.collectionOpts.map((button) => (
+                                    <button
+                                        key={`${button}-filters`}
+                                        onClick={() => handleFilters(button)}
+                                        className={`border w-24 rounded px-2 ${
+                                            filters.collection.includes(button)
+                                                ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
+                                                : "border-red-500 text-red-500 dark:border-red-400 dark:text-red-400 hover:bg-red-600 dark:hover:border-red-600 hover:text-red-100"
+                                        } `}
+                                    >
+                                        {button}
+                                    </button>
+                                ))}
+                            </div>
+                            <hr className="my-2" />
+                            <div className="grid grid-rows-3 grid-cols-2 gap-2">
+                                {filters.paginationOpts.map((perPage) => (
+                                    <button
+                                        key={`${perPage}-pagination`}
+                                        onClick={() =>
+                                            handlePagination(perPage)
+                                        }
+                                        className={`border w-24 rounded px-2 ${
+                                            filters.pagination === perPage
+                                                ? "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
+                                                : "border-red-500 text-red-500 hover:bg-red-600 dark:border-red-400 dark:text-red-400 dark:hover:border-red-600 hover:text-red-100"
+                                        } `}
+                                    >
+                                        {perPage}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

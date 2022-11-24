@@ -27,11 +27,8 @@ const Body = ({ credentials }: MainComponent) => {
     }
 
     return (
-        <div>
+        <div className="">
             <div className="p-5 text-left flex flex-col">
-                <h1 className="text-2xl uppercase leading-tight mb-2">
-                    Steam Achievements!
-                </h1>
                 <Filter
                     {...{
                         collatedData,

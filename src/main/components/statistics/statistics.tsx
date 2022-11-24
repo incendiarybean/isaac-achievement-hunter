@@ -18,35 +18,37 @@ const Statistics = ({
             )
         );
     }, [collatedData]);
-
+    //76561198065815181
     return (
         <div>
             {credentials.steamUserId ? (
-                <div className="flex flex-col bg-white dark:bg-slate-900 rounded border-l-4 border-blue-400 shadow p-1">
-                    <span className="p-2 text-xs">
-                        {stage > 0
-                            ? `Completed ${completed}%`
-                            : "Calculating Completion..."}
-                    </span>
-                    <div className="mx-2 mb-4">
-                        <div className="rounded-full h-4 w-full bg-slate-300 dark:bg-slate-700 shadow-inner">
-                            <div
-                                className="transition-width ease-in-out duration-500 h-full bg-blue-400 rounded-full shadow"
-                                style={{ width: `${completed || 0}%` }}
-                            ></div>
-                        </div>
+                <div className="z-0 mx-4 mb-4">
+                    <div className="text-lg font-extralight tracking-wide border-b border-zinc-600 mb-2 flex justify-between items-end">
+                        <h1>Completed...</h1>{" "}
+                        <p className="text-xs mr-1">
+                            Percentage of Completed Achievements
+                        </p>
+                    </div>
+                    <div className="relative rounded-full w-full bg-slate-300 dark:bg-zinc-600 shadow-inner h-8 p-1 items-center flex z-0 ">
+                        <p className="z-0 absolute right-4 text-xs">
+                            {completed}%
+                        </p>
+                        <div
+                            className="z-0 transition-width ease-in-out duration-500 h-full bg-gradient-to-r from-sky-400 to-sky-500 rounded-full shadow flex justify-end"
+                            style={{ width: `${completed || 0}%` }}
+                        />
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col bg-white dark:bg-slate-900 rounded border-l-4 border-blue-400 shadow p-1">
-                    <h1 className="p-2 text-md text-red-400 dark:text-red-500">
+                <div className="flex flex-col bg-white dark:bg-zinc-700 border-l-4 border-orange-500 shadow-lg p-2">
+                    <h1 className="p-2 text-md font-bold tracking-wide leading-relaxed text-orange-400 dark:text-orange-500">
                         Achievement Tracking is currently paused.
                     </h1>
-                    <div className="mx-2 mb-4">
-                        <div className="text-sm">
+                    <div className="mx-2 mb-4 -mt-2">
+                        <div className="text-sm tracking-wide leading-loose">
                             <p>
-                                Please enter your Steam User ID into your
-                                account settings!
+                                Please enter your Steam User ID into the
+                                settings!
                             </p>
                             <p>
                                 You can get this from{" "}

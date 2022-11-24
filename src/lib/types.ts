@@ -121,6 +121,7 @@ export interface Credentials {
     steamApiKey: string | undefined;
     steamUserId: string | undefined;
     remember: boolean;
+    version: 0;
 }
 
 export interface ServiceStatus {

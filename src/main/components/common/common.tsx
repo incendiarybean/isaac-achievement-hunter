@@ -49,7 +49,7 @@ export const Tick = () => (
 
 export const Spinner = () => (
     <svg
-        className="animate-spin h-5 w-5 text-blue-400"
+        className="animate-spin h-5 w-5"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

@@ -26,8 +26,8 @@ const Table = ({ stage, currentPageData }: TableComponent) => {
                                 onClick={() => browse(data.url)}
                                 className={`${
                                     data.url &&
-                                    "group-hover:scale-105 group-hover:dark:bg-slate-700 hover:dark:divide-slate-900"
-                                } transition-transform duration-150 ease-in-out bg-white dark:bg-slate-900 rounded-lg shadow-sm divide-x dark:divide-slate-700 flex flex-row w-full text-left my-2 h-16 text-slate-900 dark:text-white`}
+                                    "group-hover:scale-105 group-hover:dark:bg-zinc-700 "
+                                } transition-transform duration-150 ease-in-out bg-white dark:bg-zinc-700 rounded shadow-lg divide-x dark:divide-zinc-600 flex flex-row w-full text-left my-2 h-16 text-zinc-900 dark:text-white`}
                             >
                                 <p className="w-16 p-2 flex justify-center items-center h-full">
                                     <img
