@@ -8,7 +8,7 @@
     },
     "package": {
         "productName": "isaac-achievement-hunter",
-        "version": "0.1.0"
+        "version": "0.1.1"
     },
     "tauri": {
         "allowlist": {
@@ -51,7 +51,12 @@
             "csp": null
         },
         "updater": {
-            "active": false
+            "active": true,
+            "endpoints": [
+                "https://gist.githubusercontent.com/incendiarybean/d3870a1b591ff30a9ea9f26f9a7e6b3c/raw"
+            ],
+            "dialog": false,
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVBM0I4NDNDOTE2RTkyQzYKUldUR2ttNlJQSVE3V3NQOUFMUVo5Smp2Vy9qSDRFeEkvaW5Kdk11ZUlSMGVNNUg1SE9BQ1h4ZmYK"
         },
         "windows": [
             {
