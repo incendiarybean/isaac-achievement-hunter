@@ -16,7 +16,6 @@ const AutoUpdater = () => {
     useEffect(() => {
         const updater = async () => {
             const { shouldUpdate, manifest } = await checkUpdate();
-            console.log(manifest);
             setUpdateAvailable(shouldUpdate);
             if (manifest) {
                 setUpdateManifest(manifest);
