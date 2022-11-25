@@ -6,18 +6,6 @@ This app was designed to track Steam Achievements, with a simple UI and filter f
 
 This app uses the Binding of Isaac Wiki and 2 seperate Steam API endpoints to collate all the data into a single table.
 
-### Example:
-
-![Isaac Achievement UI](./public/app-appearance.png)
-
-# Features
-
-## Auto-Updater
-
-I-A-H uses Tauri's built in updater that grabs information from this [GitHub Gist.](https://gist.githubusercontent.com/incendiarybean/d3870a1b591ff30a9ea9f26f9a7e6b3c/raw/2c0a0feeb3615a94395d19d7c6cea3cf8a9f4359/iah-au.json)
-
-Whenever the Version is bumped in this Gist, the launcher will automatically pick up on the version changes and suggest the user upgrades the lastest version.
-
 ## Current Features
 
 -   Filter by Completed/Not Completed
@@ -27,13 +15,13 @@ Whenever the Version is bumped in this Gist, the launcher will automatically pic
 -   Displays percentage complete.
 -   Paginated by 10, 25, 50, all.
 
-## Planned Features
+### User Interface:
 
--   None yet
+![Isaac Achievement UI](./public/app-appearance.png)
 
 # How to use?
 
-## Simple usage:
+## As a Product:
 
 Firstly install the application from the msi file, then launch the application.
 
@@ -43,7 +31,9 @@ If you have a custom Steam URL, you may need to use a tool like Steam DB to get 
 
 > **OPTIONAL**: You can include your own Steam API key in the call, but this isn't required.
 
-## Custom usage:
+## For Development:
+
+### Running and building
 
 You can run your own build of the application by using Git Clone and changing parts you want:
 
@@ -60,3 +50,24 @@ npm run build
 This command builds the React application and creates an exectuable built by Tauri.
 
 > **Requirements**: Rust and all NPM dependencies must be installed, including Windows Dev tools with C++ Development tools.
+
+### Generating Versions:
+
+When creating new app features, use semantic versioning:
+
+-   0.0.1 -> Minor patch
+-   0.1.0 -> Minor Update / Medium update
+-   1.0.0 -> Breaking feature / Major update
+
+Update the version in these places:
+
+-   ./package.json & npm install
+-   ./src-tauri/cargo.toml
+-   ./src-tauri/tauri.conf.json & npm build
+-   When releasing new versions onto GitHub, update [GitHub Gist.](#auto-updater)
+
+## Auto-Updater
+
+I-A-H uses Tauri's built in updater that grabs information from this [GitHub Gist.](https://gist.githubusercontent.com/incendiarybean/d3870a1b591ff30a9ea9f26f9a7e6b3c/raw/2c0a0feeb3615a94395d19d7c6cea3cf8a9f4359/iah-au.json)
+
+Whenever the Version is bumped in this Gist, the launcher will automatically pick up on the version changes and suggest the user upgrades the lastest version.
