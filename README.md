@@ -12,6 +12,12 @@ This app uses the Binding of Isaac Wiki and 2 seperate Steam API endpoints to co
 
 # Features
 
+## Auto-Updater
+
+I-A-H uses Tauri's built in updater that grabs information from this [GitHub Gist.](https://gist.githubusercontent.com/incendiarybean/d3870a1b591ff30a9ea9f26f9a7e6b3c/raw/2c0a0feeb3615a94395d19d7c6cea3cf8a9f4359/iah-au.json)
+
+Whenever the Version is bumped in this Gist, the launcher will automatically pick up on the version changes and suggest the user upgrades the lastest version.
+
 ## Current Features
 
 -   Filter by Completed/Not Completed
