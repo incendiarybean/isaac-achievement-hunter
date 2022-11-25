@@ -1,32 +1,38 @@
-import type { AccountDetails, Credentials, NavigatorComponent } from "@types";
+import type {
+    NavigatorComponent,
+    SavedSteamDetails,
+    SteamDetails,
+} from "@types";
 import { createRef, useEffect, useState } from "react";
-import { removeFile, writeFile } from "../../../common/fileHandler";
+import {
+    existingFile,
+    removeFile,
+    writeFile,
+} from "../../../common/fileHandler";
 
 import { ExternalClickHandler } from "../../../hooks/externalClickHandler";
 
 export const Navigator = ({
-    credentials,
-    setCredentials,
+    steamDetails,
+    setSteamDetails,
 }: NavigatorComponent) => {
-    const [account, openAccount] = useState(false);
-    const [accountDetails, setAccountDetails] = useState<AccountDetails>({
-        steamApiKey: credentials.steamApiKey,
-        steamUserId: credentials.steamUserId,
-        remember: credentials.remember,
-    });
+    const [settingsOpen, setSettingsOpen] = useState(false);
+    const [savedSteamDetails, setSavedSteamDetails] =
+        useState<SavedSteamDetails>({
+            steamUserId: steamDetails.steamUserId,
+            remember: steamDetails.remember,
+        });
 
     useEffect(() => {
-        const { steamApiKey, steamUserId, remember } = credentials;
-        console.log(credentials);
-        setAccountDetails({ steamApiKey, steamUserId, remember });
-    }, [credentials]);
+        const { steamUserId, remember } = steamDetails;
+        setSavedSteamDetails({ steamUserId, remember });
+    }, [steamDetails]);
 
     const saveCredentials = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const { steamUserId, steamApiKey } = accountDetails;
+        const { steamUserId, remember } = savedSteamDetails;
         const steamIdExpression = /^\d{17}$/g;
-        const steamApiKeyExpression = /[\dA-Z]/g;
 
         if (steamUserId) {
             if (!steamIdExpression.test(steamUserId)) {
@@ -36,32 +42,31 @@ export const Navigator = ({
             }
         }
 
-        if (steamApiKey) {
-            if (!steamApiKeyExpression.test(steamApiKey)) {
-                throw new Error("Failed to validate Steam API Key: 0-9 & A-Z");
-            }
-        }
-
-        setCredentials((credentials: Credentials) => ({
-            ...accountDetails,
-            version: credentials.version + 1,
+        setSteamDetails((steamDetails: SteamDetails) => ({
+            ...savedSteamDetails,
+            version: steamDetails.version + 1,
         }));
 
-        const { remember } = accountDetails;
+        setSettingsOpen(false);
+
         if (remember) {
             return writeFile(
-                "credentials.json",
-                JSON.stringify(accountDetails)
-            ).then((msg) => console.log("write: " + msg));
+                "steamData.json",
+                JSON.stringify(savedSteamDetails)
+            ).catch();
         }
 
-        return removeFile("credentials.json")
-            .then((msg) => console.log("delete: " + msg))
-            .catch((e) => console.log(e));
+        return existingFile("steamData.json")
+            .then((exists) => {
+                if (exists) {
+                    removeFile("steamData.json").catch((e) => console.log(e));
+                }
+            })
+            .catch();
     };
 
     const accountElement = createRef<HTMLDivElement>();
-    ExternalClickHandler(accountElement, openAccount);
+    ExternalClickHandler(accountElement, setSettingsOpen);
 
     return (
         <div className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 md:z-50 md:border-b md:border-sky-500/10 dark:border-sky-100/10 bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent">
@@ -90,17 +95,19 @@ export const Navigator = ({
                                         <div className="relative">
                                             <button
                                                 onClick={() =>
-                                                    openAccount(!account)
+                                                    setSettingsOpen(
+                                                        !settingsOpen
+                                                    )
                                                 }
                                                 className={`${
-                                                    account &&
+                                                    settingsOpen &&
                                                     "border-b border-sky-400 text-sky-500"
                                                 } px-2 hover:text-sky-500 dark:hover:text-sky-400`}
                                             >
                                                 Settings
                                             </button>
                                             <div
-                                                hidden={!account}
+                                                hidden={!settingsOpen}
                                                 className="absolute right-0 top-12"
                                             >
                                                 <div ref={accountElement}>
@@ -116,33 +123,6 @@ export const Navigator = ({
 
                                                         <hr className="mb-4" />
 
-                                                        <label className="flex items-center justify-between">
-                                                            <span className="text-sm font-normal">
-                                                                Steam API Key
-                                                            </span>
-                                                            <input
-                                                                onChange={({
-                                                                    target,
-                                                                }) =>
-                                                                    setAccountDetails(
-                                                                        (
-                                                                            accountDetails: AccountDetails
-                                                                        ) => ({
-                                                                            ...accountDetails,
-                                                                            steamApiKey:
-                                                                                target.value ||
-                                                                                undefined,
-                                                                        })
-                                                                    )
-                                                                }
-                                                                value={
-                                                                    accountDetails.steamApiKey ||
-                                                                    ""
-                                                                }
-                                                                className="px-2 w-56 border rounded placeholder:px-2 text-sm ml-2 dark:bg-slate-800 dark:text-white"
-                                                            />
-                                                        </label>
-
                                                         <label className="flex items-center mt-2 justify-between">
                                                             <span className="text-sm font-normal">
                                                                 Steam User ID
@@ -151,11 +131,11 @@ export const Navigator = ({
                                                                 onChange={({
                                                                     target,
                                                                 }) =>
-                                                                    setAccountDetails(
+                                                                    setSavedSteamDetails(
                                                                         (
-                                                                            accountDetails: AccountDetails
+                                                                            savedSteamDetails: SavedSteamDetails
                                                                         ) => ({
-                                                                            ...accountDetails,
+                                                                            ...savedSteamDetails,
                                                                             steamUserId:
                                                                                 target.value ||
                                                                                 undefined,
@@ -163,7 +143,7 @@ export const Navigator = ({
                                                                     )
                                                                 }
                                                                 value={
-                                                                    accountDetails.steamUserId ||
+                                                                    savedSteamDetails.steamUserId ||
                                                                     ""
                                                                 }
                                                                 className="px-2 w-56 border rounded placeholder:px-2 text-sm ml-2 dark:bg-slate-800 dark:text-white"
@@ -179,11 +159,11 @@ export const Navigator = ({
                                                                 onChange={({
                                                                     target,
                                                                 }) =>
-                                                                    setAccountDetails(
+                                                                    setSavedSteamDetails(
                                                                         (
-                                                                            accountDetails: AccountDetails
+                                                                            savedSteamDetails: SavedSteamDetails
                                                                         ) => ({
-                                                                            ...accountDetails,
+                                                                            ...savedSteamDetails,
                                                                             remember:
                                                                                 target.checked,
                                                                         })
@@ -191,7 +171,7 @@ export const Navigator = ({
                                                                 }
                                                                 type="checkbox"
                                                                 checked={
-                                                                    accountDetails.remember
+                                                                    savedSteamDetails.remember
                                                                 }
                                                                 className="ml-6"
                                                             />
@@ -207,10 +187,6 @@ export const Navigator = ({
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* <div
-                                            hidden={!account}
-                                            className="absolute z-0 top-0 left-0 w-full h-screen bg-zinc-800 bg-opacity-70"
-                                        /> */}
                                     </li>
 
                                     <li>

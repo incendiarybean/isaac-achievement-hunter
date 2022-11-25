@@ -1,12 +1,11 @@
 import { Main, Navigator } from "./main";
 import { useEffect, useState } from "react";
 
-import { Credentials } from "@types";
+import { SteamDetails } from "@types";
 import { readFile } from "./common/fileHandler";
 
 const App = () => {
-    const [credentials, setCredentials] = useState<Credentials>({
-        steamApiKey: undefined,
+    const [steamDetails, setSteamDetails] = useState<SteamDetails>({
         steamUserId: undefined,
         remember: false,
         version: 0,
@@ -14,10 +13,10 @@ const App = () => {
 
     useEffect(() => {
         const checkAccount = async () => {
-            await readFile("credentials.json")
+            await readFile("steamData.json")
                 .then((fileContent: string) =>
-                    setCredentials((credentials) => ({
-                        ...credentials,
+                    setSteamDetails((steamDetails) => ({
+                        ...steamDetails,
                         ...JSON.parse(fileContent),
                     }))
                 )
@@ -29,10 +28,10 @@ const App = () => {
 
     return (
         <div className="h-full text-slate-800 dark:text-white">
-            <Navigator {...{ credentials, setCredentials }} />
+            <Navigator {...{ steamDetails, setSteamDetails }} />
             <div className="h-full flex flex-col divide-y justify-center items-center">
                 <div className="w-4/5 h-full overflow-visible ">
-                    <Main {...{ credentials }} />
+                    <Main {...{ steamDetails }} />
                 </div>
             </div>
         </div>

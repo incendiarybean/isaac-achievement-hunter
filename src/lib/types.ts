@@ -12,9 +12,8 @@ export interface WikiComponent {
 }
 
 export interface StatisticsComponent {
-    stage: number;
     collatedData: CollatedData[];
-    credentials: Credentials;
+    steamDetails: SteamDetails;
 }
 
 export interface PaginationComponent {
@@ -47,16 +46,16 @@ export interface StatusCheckerComponent {
 }
 
 export interface NavigatorComponent {
-    credentials: AccountDetails;
-    setCredentials: Function;
+    steamDetails: SteamDetails;
+    setSteamDetails: Function;
 }
 
 export interface MainComponent {
-    credentials: Credentials;
+    steamDetails: SteamDetails;
 }
 
 export interface ErrorComponent {
-    credentials: Credentials;
+    steamDetails: SteamDetails;
 }
 
 export interface LoaderComponent {
@@ -111,14 +110,12 @@ export interface Pages {
 
 export type CollatedData = WikiData & Achievement;
 
-export interface AccountDetails {
-    steamApiKey: string | undefined;
+export interface SavedSteamDetails {
     steamUserId: string | undefined;
     remember: boolean;
 }
 
-export interface Credentials {
-    steamApiKey: string | undefined;
+export interface SteamDetails {
     steamUserId: string | undefined;
     remember: boolean;
     version: 0;
@@ -129,6 +126,17 @@ export interface ServiceStatus {
     loading: boolean;
     api: boolean;
     steamApi: boolean;
-    steamApiKey: boolean;
     steamAccount: boolean;
+}
+
+export interface ErrorStatus {
+    name: string;
+    reasons: JSX.Element[];
+}
+
+export interface ErrorStatusInfo {
+    [key: string]: ErrorStatus;
+    api: ErrorStatus;
+    steamApi: ErrorStatus;
+    steamAccount: ErrorStatus;
 }

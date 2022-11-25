@@ -2,9 +2,9 @@ import type { StatusCheckerComponent } from "@types";
 
 export const Cross = () => (
     <svg
-        height="21"
+        height="24"
         viewBox="0 0 21 21"
-        width="21"
+        width="24"
         xmlns="http://www.w3.org/2000/svg"
         className="text-red-500"
     >
@@ -27,9 +27,9 @@ export const Cross = () => (
 
 export const Tick = () => (
     <svg
-        height="21"
+        height="24"
         viewBox="0 0 21 21"
-        width="21"
+        width="24"
         xmlns="http://www.w3.org/2000/svg"
         className="text-green-500"
     >

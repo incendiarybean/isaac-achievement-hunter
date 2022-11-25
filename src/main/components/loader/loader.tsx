@@ -11,8 +11,8 @@ export const LoadingStatus = ({ stage, message }: LoaderComponent) => {
             <div className="relative rounded-full w-full bg-slate-300 dark:bg-zinc-600 shadow-inner h-8 p-1 items-center flex overflow-hidden ">
                 <p className="absolute right-4 text-xs">{calc}%</p>
                 <div
-                    className="overflow-hidden transition-width ease-in-out duration-1000 h-full bg-gradient-to-r from-sky-400 to-sky-500 rounded-full shadow"
-                    style={{ width: `${calc || 0}%` }}
+                    className="overflow-hidden transition-width ease-in-out duration-1000 h-full bg-gradient-to-r from-lime-400 to-lime-500 rounded-full shadow"
+                    style={{ width: `${calc || 5}%` }}
                 />
             </div>
         </div>

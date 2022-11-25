@@ -24,7 +24,7 @@ export const writeFile = (
 
 export const existingFile = (fileName: string): Promise<boolean> =>
     new Promise<boolean>((resolve, reject) =>
-        invoke<boolean>("file_exists", {
+        invoke<boolean>("existing_file", {
             fileName,
         })
             .then((exists: boolean) => resolve(exists))
