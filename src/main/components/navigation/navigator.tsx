@@ -34,6 +34,7 @@ export const Navigator = ({
         const { steamUserId, remember } = savedSteamDetails;
         const steamIdExpression = /^\d{17}$/g;
 
+        // TODO -> Do something about this
         if (steamUserId) {
             if (!steamIdExpression.test(steamUserId)) {
                 throw new Error(
