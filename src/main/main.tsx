@@ -27,7 +27,7 @@ const Body = ({ steamDetails }: MainComponent) => {
     }
 
     return (
-        <div className="">
+        <div className="animate-fadeIn">
             <div className="py-4 text-left flex flex-col">
                 <Statistics
                     {...{

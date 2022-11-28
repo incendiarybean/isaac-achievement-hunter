@@ -63,6 +63,17 @@ export interface LoaderComponent {
     message: string;
 }
 
+export interface NavigationInnerComponents {
+    steamDetails: SteamDetails;
+    setSteamDetails: Function;
+    setSettingsOpen: Function;
+}
+
+export interface NavigationComponent {
+    steamDetails: SteamDetails;
+    setSteamDetails: Function;
+}
+
 /**
  * Data types
  */

@@ -25,7 +25,7 @@ const Table = ({ stage, currentPageData }: TableComponent) => {
                         >
                             <button
                                 onClick={() => browse(data.url)}
-                                className="group-hover:scale-105 group-hover:dark:bg-zinc-700 transition-transform duration-150 ease-in-out bg-white dark:bg-zinc-700 shadow-lg divide-x dark:divide-zinc-600 flex flex-row w-full text-left my-2 h-16 text-zinc-900 dark:text-white rounded"
+                                className="overflow-auto group-hover:scale-105 group-hover:dark:bg-zinc-700 transition-transform duration-150 ease-in-out bg-white dark:bg-zinc-700 shadow-lg divide-x dark:divide-zinc-600 flex flex-row w-full text-left my-2 h-16 text-zinc-900 dark:text-white rounded"
                             >
                                 <p className="flex-none w-16 h-full flex justify-center items-center ">
                                     <img
@@ -34,10 +34,10 @@ const Table = ({ stage, currentPageData }: TableComponent) => {
                                         src={data.icon}
                                     />
                                 </p>
-                                <p className="flex-none h-full min-w-56 w-56 p-2">
+                                <p className="flex-auto sm:flex-none h-full w-24 md:w-56 p-2">
                                     {data.displayName}
                                 </p>
-                                <p className="flex-auto h-full p-2 overflow-auto">
+                                <p className="hidden sm:block flex-auto h-full p-2 overflow-auto">
                                     {data.helper}
                                 </p>
                                 <p className="flex-none w-16 h-full flex items-center justify-around">

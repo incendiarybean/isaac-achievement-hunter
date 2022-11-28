@@ -27,6 +27,15 @@ module.exports = {
                 120: "30rem",
                 112: "28rem",
             },
+            animation: {
+                fadeIn: "fadeIn 200ms ease-in",
+            },
+            keyframes: (theme) => ({
+                fadeIn: {
+                    "0%": { opacity: 0 },
+                    "100%": { opacity: 2 },
+                },
+            }),
         },
     },
     plugins: [],

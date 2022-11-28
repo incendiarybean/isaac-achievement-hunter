@@ -9,7 +9,7 @@
 html {
     @apply bg-gray-200;
     @apply dark:bg-zinc-800;
-    overflow: visible;
+    overflow: overlay;
 }
 
 body {
@@ -56,10 +56,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: #9ca3af;
-}
-
-.fade-in {
-    @apply transition-all;
-    @apply duration-500;
-    @apply ease-in-out;
 }

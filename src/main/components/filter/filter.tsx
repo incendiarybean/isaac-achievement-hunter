@@ -153,6 +153,7 @@ const Filter = ({
                 )}
                 {filters.collection.map((filterBy) => (
                     <FilterButton
+                        key={`${filterBy}-inline-filters`}
                         {...{
                             handler: handleFilters,
                             filter: filterBy,

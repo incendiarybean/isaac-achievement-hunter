@@ -20,8 +20,8 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
             {steamDetails.steamUserId ? (
                 <div className="z-0 mx-4 mb-4">
                     <div className="text-lg font-extralight tracking-wide border-b border-zinc-600 mb-2 flex justify-between items-end">
-                        <h1>Achievements...</h1>{" "}
-                        <p className="text-xs mr-1">
+                        <h1>Achievements...</h1>
+                        <p className="hidden sm:block text-xs mr-1">
                             Percentage of Completed Achievements
                         </p>
                     </div>
@@ -30,8 +30,10 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
                             {completed}%
                         </p>
                         <div
-                            className="z-0 transition-width ease-in-out duration-500 h-full bg-gradient-to-r from-sky-400 to-sky-500 rounded-full shadow flex justify-end"
-                            style={{ width: `${completed || 5}%` }}
+                            className="z-0 transition-width ease-in-out duration-500 h-full bg-gradient-to-r from-sky-400 to-sky-500 rounded-full shadow flex justify-end min-w-[1.55rem]"
+                            style={{
+                                width: `${completed}%`,
+                            }}
                         />
                     </div>
                 </div>
