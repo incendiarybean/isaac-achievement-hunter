@@ -20,7 +20,7 @@
         },
         "bundle": {
             "active": true,
-            "category": "DeveloperTool",
+            "category": "Utility",
             "copyright": "",
             "deb": {
                 "depends": []
@@ -33,7 +33,8 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "com.benweare.dev",
+            "identifier": "com.BenWeare.dev",
+            "publisher": "Benjamin Weare",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,
