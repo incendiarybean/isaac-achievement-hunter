@@ -5,6 +5,7 @@ import { invoke } from "@tauri-apps/api";
 const Table = ({ stage, currentPageData }: TableComponent) => {
     const bindingOfIsaacWikiUrl = "https://bindingofisaacrebirth.fandom.com";
 
+    // TODO -> Move to common
     const browse = async (extension: string) => {
         await invoke("open_browser", {
             siteName: `${bindingOfIsaacWikiUrl}${extension}`,
@@ -24,25 +25,22 @@ const Table = ({ stage, currentPageData }: TableComponent) => {
                         >
                             <button
                                 onClick={() => browse(data.url)}
-                                className={`${
-                                    data.url &&
-                                    "group-hover:scale-105 group-hover:dark:bg-slate-700 hover:dark:divide-slate-900"
-                                } transition-transform duration-150 ease-in-out bg-white dark:bg-slate-900 rounded-lg shadow-sm divide-x dark:divide-slate-700 flex flex-row w-full text-left my-2 h-16 text-slate-900 dark:text-white`}
+                                className="overflow-auto group-hover:scale-105 group-hover:dark:bg-zinc-700 transition-transform duration-150 ease-in-out bg-white dark:bg-zinc-700 shadow-lg divide-x dark:divide-zinc-600 flex flex-row w-full text-left my-2 h-16 text-zinc-900 dark:text-white rounded"
                             >
-                                <p className="w-16 p-2 flex justify-center items-center h-full">
+                                <p className="flex-none w-16 h-full flex justify-center items-center ">
                                     <img
-                                        className="rounded-sm"
+                                        className="rounded w-12 h-12"
                                         alt={`${data.apiname}-${data.displayName}`}
                                         src={data.icon}
                                     />
                                 </p>
-                                <p className="min-w-56 flex justify-start items-center w-56 p-2 h-full">
+                                <p className="flex-auto sm:flex-none h-full w-24 md:w-56 p-2">
                                     {data.displayName}
                                 </p>
-                                <p className="min-w-56 w-full p-2 overflow-auto h-full">
+                                <p className="hidden sm:block flex-auto h-full p-2 overflow-auto">
                                     {data.helper}
                                 </p>
-                                <p className="w-12 p-2 flex justify-center items-center h-full">
+                                <p className="flex-none w-16 h-full flex items-center justify-around">
                                     <StatusChecker status={!!data.achieved} />
                                 </p>
                             </button>

@@ -55,9 +55,9 @@ const Pagination = ({
             return (
                 <button
                     onClick={() => handleChangePage(index)}
-                    className={`w-full text-center hover:bg-blue-600 hover:text-white ${
+                    className={`border-t border-b border-sky-300 w-full text-center hover:bg-sky-600 hover:text-white ${
                         currentPage === index
-                            ? "bg-blue-500 dark:bg-blue-500 text-white shadow-inner"
+                            ? "bg-sky-500 dark:bg-sky-500 text-white shadow-inner"
                             : "  hover:shadow-inner"
                     }`}
                 >
@@ -91,11 +91,11 @@ const Pagination = ({
                 <div className="flex justify-around">
                     <button
                         onClick={() => handleChangePage(currentPage - 1)}
-                        className="border w-24 rounded-l-sm border-blue-500 text-blue-500 hover:bg-blue-700 dark:border-blue-300 dark:text-blue-300 dark:hover:bg-blue-600 hover:text-blue-100"
+                        className="border w-24 rounded-l-sm border-sky-300 text-sky-300 hover:bg-sky-600 dark:border-sky-300 dark:text-sky-300 dark:hover:bg-sky-600 hover:text-sky-100"
                     >
                         Back
                     </button>
-                    <div className="border-b border-t w-full border-blue-500 text-blue-500 dark:border-blue-300 dark:text-blue-300 flex divide-x divide-blue-500 dark:divide-blue-300">
+                    <div className="w-full border-sky-300 text-sky-300 dark:border-sky-300 dark:text-sky-300 flex divide-x divide-sky-500 dark:divide-sky-300">
                         {Object.keys(pages).map((key, index) => (
                             <PageRange
                                 key={`pagination-button-${key}`}
@@ -105,7 +105,7 @@ const Pagination = ({
                     </div>
                     <button
                         onClick={() => handleChangePage(currentPage + 1)}
-                        className="border w-24 rounded-r-sm border-blue-500 text-blue-500 hover:bg-blue-700 dark:border-blue-300 dark:text-blue-300 dark:hover:bg-blue-600 hover:text-blue-100"
+                        className="border w-24 rounded-r-sm border-sky-300 text-sky-300 hover:bg-sky-600 dark:border-sky-300 dark:text-sky-300 dark:hover:bg-sky-600 hover:text-sky-100"
                     >
                         Next
                     </button>

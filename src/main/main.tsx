@@ -3,7 +3,7 @@ import { Error, Filter, Loader, Pagination, Statistics, Table } from "./";
 import FirstLoadHandler from "../hooks/firstLoadHandler";
 import type { MainComponent } from "@types";
 
-const Body = ({ credentials }: MainComponent) => {
+const Body = ({ steamDetails }: MainComponent) => {
     const {
         status,
         collatedData,
@@ -16,10 +16,10 @@ const Body = ({ credentials }: MainComponent) => {
         filters,
         setFilters,
         error,
-    } = FirstLoadHandler(credentials);
+    } = FirstLoadHandler(steamDetails);
 
     if (error) {
-        return <Error {...{ credentials }} />;
+        return <Error {...{ steamDetails }} />;
     }
 
     if (status.stage < 3) {
@@ -27,11 +27,17 @@ const Body = ({ credentials }: MainComponent) => {
     }
 
     return (
-        <div>
-            <div className="p-5 text-left flex flex-col">
-                <h1 className="text-2xl uppercase leading-tight mb-2">
-                    Steam Achievements!
-                </h1>
+        <div className="animate-fadeIn">
+            <div className="py-4 text-left flex flex-col">
+                <Statistics
+                    {...{
+                        ...status,
+                        collatedData,
+                        steamDetails,
+                    }}
+                />
+            </div>
+            <div>
                 <Filter
                     {...{
                         collatedData,
@@ -40,15 +46,6 @@ const Body = ({ credentials }: MainComponent) => {
                         setFilteredData,
                         setFilters,
                         setCurrentPage,
-                    }}
-                />
-            </div>
-            <div>
-                <Statistics
-                    {...{
-                        ...status,
-                        collatedData,
-                        credentials,
                     }}
                 />
                 <Pagination

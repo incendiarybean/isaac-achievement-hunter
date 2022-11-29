@@ -1,136 +1,46 @@
-import { AccountDetails, NavigatorComponent } from "@types";
-import { createRef, useEffect, useState } from "react";
-
-import { ExternalClickHandler } from "../../../hooks/externalClickHandler";
-import { invoke } from "@tauri-apps/api";
+import AutoUpdater from "../update/update";
+import DesktopNav from "./widgets/desktop-nav";
+import MobileNav from "./widgets/mobile-nav";
+import type { NavigatorComponent } from "@types";
 
 export const Navigator = ({
-    credentials,
-    setCredentials,
+    steamDetails,
+    setSteamDetails,
 }: NavigatorComponent) => {
-    const [account, openAccount] = useState(false);
-    const [accountDetails, setAccountDetails] = useState<AccountDetails>({
-        steamApiKey: credentials.steamApiKey,
-        steamUserId: credentials.steamUserId,
-        remember: credentials.remember,
-    });
-
-    useEffect(() => {
-        setAccountDetails(credentials);
-    }, [credentials]);
-
-    const saveCredentials = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        setCredentials(accountDetails);
-
-        const { remember } = accountDetails;
-        if (remember) {
-            return invoke("write_file", {
-                fileName: "credentials.json",
-                jsonString: JSON.stringify(accountDetails),
-            }).catch((e) => console.log(e));
-        }
-
-        return invoke("file_exists", {
-            fileName: "credentials.json",
-        }).then((res) => {
-            if (res) {
-                invoke("remove_file", { fileName: "credentials.json" }).catch(
-                    (e) => console.log(e)
-                );
-            }
-        });
-    };
-
-    const accountElement = createRef<HTMLDivElement>();
-    ExternalClickHandler(accountElement, openAccount);
-
     return (
-        <div className="absolute top-0 bg-white dark:bg-slate-900 p-2 border-b shadow-sm flex justify-between w-full h-12 items-center">
-            <h1 className="text-sm uppercase  hover:text-slate-900 hover:bg-slate-100 rounded-md px-4 py-1">
-                Isaac Achievement Hunter
-            </h1>
-            <div className="relative" ref={accountElement}>
-                <button
-                    onClick={() => openAccount(!account)}
-                    className="text-sm uppercase hover:text-slate-900 hover:bg-slate-100 rounded-md px-4 py-1"
-                >
-                    Account
-                </button>
-                <form
-                    onSubmit={saveCredentials}
-                    hidden={!account}
-                    className="absolute right-0 top-10 bg-white dark:bg-slate-900 rounded-md p-4 shadow-sm z-50 mt-2 w-96 border dark:border-blue-400"
-                >
-                    <h1 className="text-md font-medium">
-                        Optional Credentials
-                    </h1>
-
-                    <hr className="mb-4" />
-
-                    <label className="flex items-center">
-                        <span className="w-24 text-sm font-normal">
-                            Steam API Key
-                        </span>
-                        <input
-                            onChange={({ target }) =>
-                                setAccountDetails(
-                                    (accountDetails: AccountDetails) => ({
-                                        ...accountDetails,
-                                        steamApiKey: target.value || undefined,
-                                    })
-                                )
-                            }
-                            value={accountDetails.steamApiKey || ""}
-                            className="px-2 w-56 border rounded-md placeholder:px-2 text-sm ml-2 dark:bg-slate-800 dark:text-white"
+        <div className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 md:z-50 md:border-b md:border-sky-500/10 dark:border-sky-100/10 bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent">
+            <AutoUpdater />
+            <div className="max-w-8xl mx-auto">
+                <div className="py-4 border-b border-sky-900/10 px-8 md:border-0 dark:border-sky-300/10 mx-0">
+                    <div className="z-40 flex justify-between items-center w-full">
+                        <a
+                            className="mr-3 flex-none w-auto overflow-hidden md:w-auto"
+                            href="/"
+                        >
+                            <span className="">Isaac Achievement Hunter</span>
+                        </a>
+                        <a
+                            href="https://github.com/incendiarybean/isaac-achievement-hunter/releases/tag/v0.2.0-beta"
+                            className="ml-3 text-xs leading-5 font-medium text-sky-600 dark:text-sky-400 bg-sky-400/10 rounded-full py-1 px-3 hidden sm:flex items-center hover:bg-sky-400/20"
+                        >
+                            <strong className="font-semibold">
+                                IAH V0.2.0
+                            </strong>
+                        </a>
+                        <DesktopNav
+                            {...{
+                                steamDetails,
+                                setSteamDetails,
+                            }}
                         />
-                    </label>
-
-                    <label className="flex items-center mt-2">
-                        <span className="w-24 text-sm font-normal">
-                            Steam User ID
-                        </span>
-                        <input
-                            onChange={({ target }) =>
-                                setAccountDetails(
-                                    (accountDetails: AccountDetails) => ({
-                                        ...accountDetails,
-                                        steamUserId: target.value || undefined,
-                                    })
-                                )
-                            }
-                            value={accountDetails.steamUserId || ""}
-                            className="px-2 w-56 border rounded-md placeholder:px-2 text-sm ml-2 dark:bg-slate-800 dark:text-white"
-                        />
-                    </label>
-
-                    <label className="flex items-center mt-2">
-                        <span className="text-sm font-normal">
-                            Remember Credentials?
-                        </span>
-                        <input
-                            onChange={({ target }) =>
-                                setAccountDetails(
-                                    (accountDetails: AccountDetails) => ({
-                                        ...accountDetails,
-                                        remember: target.checked,
-                                    })
-                                )
-                            }
-                            type="checkbox"
-                            checked={accountDetails.remember}
-                            className="border rounded-md placeholder:px-2 text-sm ml-2 dark:bg-slate-800 dark:text-white"
-                        />
-                    </label>
-                    <div className="flex flex-col">
-                        <input
-                            type="submit"
-                            className="cursor-pointer uppercase text-sm mt-4 p-1 w-full rounded-md border border-blue-400 px-4 text-blue-500 dark:text-blue-400 hover:text-white hover:bg-blue-600"
-                            value="save"
+                        <MobileNav
+                            {...{
+                                steamDetails,
+                                setSteamDetails,
+                            }}
                         />
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );

@@ -8,8 +8,8 @@
 
 html {
     @apply bg-gray-200;
-    @apply dark:bg-gray-800;
-    overflow: visible;
+    @apply dark:bg-zinc-800;
+    overflow: overlay;
 }
 
 body {

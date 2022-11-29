@@ -7,8 +7,12 @@ export { default as Pagination } from "./components/pagination/pagination";
 export { default as Error } from "./components/error/error";
 export {
     Spinner,
-    Cross,
-    Tick,
+    CrossIcon,
+    TickIcon,
+    SettingsIcon,
+    MenuIcon,
+    GitHubIcon,
+    DocsIcon,
     StatusChecker,
 } from "./components/common/common";
 export { default as Loader } from "./components/loader/loader";

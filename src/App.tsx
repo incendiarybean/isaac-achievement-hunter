@@ -1,42 +1,47 @@
 import { Main, Navigator } from "./main";
+import { PhysicalSize, appWindow } from "@tauri-apps/api/window";
 import { useEffect, useState } from "react";
 
-import AutoUpdater from "./main/components/updater/autoUpdater";
-import { Credentials } from "@types";
-import { invoke } from "@tauri-apps/api";
+import type { SteamDetails } from "@types";
+import { readFile } from "./common/fileHandler";
 
 const App = () => {
-    const [credentials, setCredentials] = useState<Credentials>({
-        steamApiKey: undefined,
+    const [steamDetails, setSteamDetails] = useState<SteamDetails>({
         steamUserId: undefined,
         remember: false,
+        version: 0,
     });
 
     useEffect(() => {
-        const checkAccount = () => {
-            invoke("read_file", {
-                fileName: "credentials.json",
-            })
-                .then((json: unknown) => {
-                    const parsedJson = JSON.parse(json as string);
-                    setCredentials((credentials) => ({
-                        ...credentials,
-                        ...parsedJson,
-                    }));
-                })
-                .catch((e) => {});
+        const checkAccount = async () => {
+            await readFile("steamData.json")
+                .then((fileContent: string) =>
+                    setSteamDetails((steamDetails) => ({
+                        ...steamDetails,
+                        ...JSON.parse(fileContent),
+                    }))
+                )
+                .catch((e) => console.log(e));
         };
 
         checkAccount();
     }, []);
 
+    useEffect(() => {
+        const resize = async () => {
+            // TODO -> Find a better place to add this
+            await appWindow.setMinSize(new PhysicalSize(450, 350));
+        };
+
+        resize();
+    }, []);
+
     return (
-        <div className="h-full text-slate-800 dark:text-white ">
-            <Navigator {...{ credentials, setCredentials }} />
-            <div className="h-full flex flex-col dark:bg-slate-800 justify-center items-center py-12">
-                <AutoUpdater />
-                <div className="w-4/5 h-full overflow-visible ">
-                    <Main {...{ credentials }} />
+        <div className="h-full text-slate-800 dark:text-white">
+            <Navigator {...{ steamDetails, setSteamDetails }} />
+            <div className="h-full flex flex-col divide-y justify-center items-center">
+                <div className="w-4/5 h-full overflow-visible">
+                    <Main {...{ steamDetails }} />
                 </div>
             </div>
         </div>

@@ -13,16 +13,16 @@ use webbrowser;
 
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![write_file, read_file, remove_file, file_exists, open_browser])
+    .invoke_handler(tauri::generate_handler![write_file, read_file, remove_file, existing_file, open_browser])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
 
 #[tauri::command]
-fn write_file(file_name: &str, json_string: &str) -> Result<bool, String> {
+fn write_file(file_name: &str, file_content: &str) -> Result<bool, String> {
     let write = || -> Result<File, io::Error> {
       let mut file = File::create("./data/".to_owned() + file_name)?;
-      file.write_all(format!("{}", json_string).as_bytes())?;
+      file.write_all(format!("{}", file_content).as_bytes())?;
       Ok(file)
     };
 
@@ -49,44 +49,44 @@ fn read_file(file_name: &str) -> Result<String, String> {
 }
 
 #[tauri::command]
-fn remove_file(file_name: &str) -> Result<String, String> {
-    let remove = || -> Result<(), io::Error> {
+fn remove_file(file_name: &str) -> Result<bool, String> {
+    let remove = || -> Result<bool, io::Error> {
       fs::remove_file("./data/".to_owned() + file_name)?;
 
-      Ok(())
+      Ok(true)
     };
 
     match remove() {
-      Ok(_) => Ok("Success".into()),
+      Ok(status) => Ok(status),
       Err(e) => Err(e.kind().to_string())
     }
 }
 
 #[tauri::command]
-fn file_exists(file_name: &str) -> bool {
+fn existing_file(file_name: &str) -> Result<bool, String> {
     let exists = || -> Result<bool, io::Error> {
       let exists = Path::new(&("./data/".to_owned() + file_name)).try_exists()?;
+
       Ok(exists)
     };
 
     match exists() {
-      Ok(exists) => exists,
-      Err(_) => false
+      Ok(exists) => Ok(exists),
+      Err(e) => Err(e.kind().to_string())
     }
 }
 
 #[tauri::command]
-fn open_browser(site_name: &str) -> bool {
-  let browse = || -> Result<bool, io::Error> {
-    webbrowser::open(site_name)?;
-    Ok(true)
-  };
+fn open_browser(site_name: &str) -> Result<bool, String> {
+    let browse = || -> Result<bool, io::Error> {
+      webbrowser::open(site_name)?;
+      Ok(true)
+    };
 
-  match browse() {
-    Ok(_) => true,
-    Err(_) => false
-  }
-
+    match browse() {
+      Ok(_) => Ok(true),
+      Err(e) => Err(e.kind().to_string())
+    }
 }
 
 

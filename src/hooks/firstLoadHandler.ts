@@ -1,9 +1,9 @@
 import type {
     Achievement,
     CollatedData,
-    Credentials,
     Filters,
     Status,
+    SteamDetails,
     WikiData,
 } from "@types";
 import { useEffect, useState } from "react";
@@ -11,10 +11,12 @@ import { useEffect, useState } from "react";
 /**
  * This function is to run on the first load of the application.
  * This was split from the main JSX files so there was less processing in the components.
- * @param credentials - Credentials type object that contains steamApiKey & steamUserId
+ * @param steamDetails - SteamDetails type object that contains steamApiKey & steamUserId
  * @returns Get/Setters for each useState
  */
-export const FirstLoadHandler = (credentials: Credentials) => {
+export const FirstLoadHandler = (steamDetails: SteamDetails) => {
+    // TODO -> Refactor this
+
     // Set page status to let user know
     const [status, setStatus] = useState<Status>({
         stage: 0,
@@ -35,7 +37,7 @@ export const FirstLoadHandler = (credentials: Credentials) => {
     const [filters, setFilters] = useState<Filters>({
         query: "",
         collection: [],
-        collectionOpts: ["completed", "waiting"],
+        collectionOpts: ["complete", "incomplete", "challenge", "daily"],
         pagination: 10,
         paginationOpts: [10, 20, 50],
     });
@@ -44,6 +46,8 @@ export const FirstLoadHandler = (credentials: Credentials) => {
     const [error, setError] = useState<boolean>();
 
     useEffect(() => {
+        const { REACT_APP_IAH_ENDPOINT } = process.env;
+
         setStatus({
             stage: 1,
             message: "Fetching Data!",
@@ -87,17 +91,14 @@ export const FirstLoadHandler = (credentials: Credentials) => {
          */
         const getAchievements = async () => {
             const paramObject: any = {};
-            if (credentials.steamApiKey) {
-                paramObject["key"] = credentials.steamApiKey;
-            }
-            if (credentials.steamUserId) {
-                paramObject["userId"] = credentials.steamUserId;
+            if (steamDetails.steamUserId) {
+                paramObject["userId"] = steamDetails.steamUserId;
             }
 
             const params = new URLSearchParams(paramObject);
 
             const response = await fetch(
-                `https://dev.benweare.co.uk/api/steam/achieve?gameId=250900&${params}`
+                `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900&${params}`
             )
                 .then((res) => res.json())
                 .then(({ response }) => {
@@ -137,7 +138,7 @@ export const FirstLoadHandler = (credentials: Credentials) => {
         };
 
         getAchievements();
-    }, [credentials]);
+    }, [steamDetails]);
 
     return {
         status,

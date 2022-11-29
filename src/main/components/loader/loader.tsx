@@ -1,29 +1,19 @@
 import { LoaderComponent } from "@types";
-import { Spinner } from "../common/common";
 
 export const LoadingStatus = ({ stage, message }: LoaderComponent) => {
-    const calc = Math.ceil((stage / 3) * 100);
+    const completed = Math.ceil((stage / 3) * 100);
+
     return (
-        <div className="flex flex-col bg-white dark:bg-slate-900 rounded border-l-4 border-blue-400 mt-10 p-4 shadow-sm">
-            <h1 className="p-2 text-md font-semibold text-blue-400">
-                Loading...
-            </h1>
-            <div className="mx-2 mb-4">
-                <h2 className="text-sm font-semibold">{message}</h2>
-                <div className="text-sm">
-                    <div className="p-2 flex items-center">
-                        <Spinner />
-                        <p className="ml-4 ">{calc}% Complete</p>
-                    </div>
-                    <div className="mx-2">
-                        <div className="rounded-full h-4 w-full bg-slate-300 dark:bg-slate-700 shadow-inner">
-                            <div
-                                className="transition-width ease-in-out duration-500 h-full bg-blue-400 rounded-full shadow"
-                                style={{ width: `${calc || 0}%` }}
-                            ></div>
-                        </div>
-                    </div>
-                </div>
+        <div className={`p-4`}>
+            <div className="text-lg font-extralight tracking-wide border-b border-zinc-600 mb-2 flex justify-between items-end">
+                <h1>Loading...</h1> <p className="text-xs mr-1">{message}</p>
+            </div>
+            <div className="relative rounded-full w-full bg-slate-300 dark:bg-zinc-600 shadow-inner h-8 p-1 items-center flex overflow-hidden ">
+                <p className="absolute right-4 text-xs">{completed}%</p>
+                <div
+                    className="overflow-hidden transition-width ease-in-out duration-1000 h-full bg-gradient-to-r from-lime-400 to-lime-500 rounded-full shadow min-w-[1.55rem]"
+                    style={{ width: `${completed}%` }}
+                />
             </div>
         </div>
     );
