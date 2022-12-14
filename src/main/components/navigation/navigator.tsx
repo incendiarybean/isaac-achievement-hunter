@@ -2,6 +2,7 @@ import AutoUpdater from "../update/update";
 import DesktopNav from "./widgets/desktop-nav";
 import MobileNav from "./widgets/mobile-nav";
 import type { NavigatorComponent } from "@types";
+import { openBrowser } from "../../../common/utils";
 
 export const Navigator = ({
     steamDetails,
@@ -19,14 +20,18 @@ export const Navigator = ({
                         >
                             <span className="">Isaac Achievement Hunter</span>
                         </a>
-                        <a
-                            href="https://github.com/incendiarybean/isaac-achievement-hunter/releases/tag/v0.2.1"
+                        <button
                             className="ml-3 text-xs leading-5 font-medium text-sky-600 dark:text-sky-400 bg-sky-400/10 rounded-full py-1 px-3 hidden sm:flex items-center hover:bg-sky-400/20"
+                            onClick={() =>
+                                openBrowser(
+                                    "https://github.com/incendiarybean/isaac-achievement-hunter/releases/tag/v0.2.0"
+                                )
+                            }
                         >
                             <strong className="font-semibold">
                                 IAH V0.2.1
                             </strong>
-                        </a>
+                        </button>
                         <DesktopNav
                             {...{
                                 steamDetails,

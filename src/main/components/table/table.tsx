@@ -1,16 +1,9 @@
 import { StatusChecker } from "../common/common";
 import type { TableComponent } from "@types";
-import { invoke } from "@tauri-apps/api";
+import { openBrowser } from "../../../common/utils";
 
 const Table = ({ stage, currentPageData }: TableComponent) => {
     const bindingOfIsaacWikiUrl = "https://bindingofisaacrebirth.fandom.com";
-
-    // TODO -> Move to common
-    const browse = async (extension: string) => {
-        await invoke("open_browser", {
-            siteName: `${bindingOfIsaacWikiUrl}${extension}`,
-        });
-    };
 
     if (stage > 0) {
         return (
@@ -24,7 +17,11 @@ const Table = ({ stage, currentPageData }: TableComponent) => {
                             }-${new Date().toISOString()}`}
                         >
                             <button
-                                onClick={() => browse(data.url)}
+                                onClick={() =>
+                                    openBrowser(
+                                        `${bindingOfIsaacWikiUrl}${data.url}`
+                                    )
+                                }
                                 className="overflow-auto group-hover:scale-105 group-hover:dark:bg-zinc-700 transition-transform duration-150 ease-in-out bg-white dark:bg-zinc-700 shadow-lg divide-x dark:divide-zinc-600 flex flex-row w-full text-left my-2 h-16 text-zinc-900 dark:text-white rounded"
                             >
                                 <p className="flex-none w-16 h-full flex justify-center items-center ">
