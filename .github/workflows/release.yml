@@ -1,0 +1,72 @@
+name: Release
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+
+    env:
+      TAURI_PRIVATE_KEY: ${{ secrets.TAURI_KEY }}
+      TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: 🛒 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: ⬇️ Download and Install Ubuntu dependencies
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev
+
+      - name: ⚙️ Configuring Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: ⚙️ Configuring Rust Cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: ⚙️ Configuring Node Version and Cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: 📦 Install the NPM Packages
+        run: npm install
+
+      - name: ⚒️ Build the Tauri Application
+        uses: tauri-apps/tauri-action@v0
+        with:
+          tagName: v__VERSION__
+          releaseName: "[${{ secrets.RELEASE_TYPE }}] __VERSION__ - Isaac Achievement Hunter"
+          releaseBody: "To be updated with a Changelog!"
+          releaseDraft: true
+          prerelease: false
+
+      # TODO -> automate GIST
+      # - name: ⚒️ Build Auto Updater Gist JSON
+      #   if: matrix.platform == 'windows-latest'
+      #   shell: powershell
+      #   run: |
+      #     $env:PACKAGE_VERSION=$(node -p "require('./package.json').version")
+      #     $env:URL=$("https://github.com/incendiarybean/isaac-achievement-hunter/releases/download/v" + "$env:PACKAGE_VERSION" + "_x64_en-US.msi.zip" )
+      #     $env:NOTES=$("https://github.com/incendiarybean/isaac-achievement-hunter/releases/tag/v" + "$env:PACKAGE_VERSION")
+      #     $env:SIGNATURE_FILEPATH=$("./src-tauri/target/release/bundle/msi/Isaac Achievement Hunter_" + "$env:PACKAGE_VERSION" + "_x64_en-US.msi.zip.sig")
+      #     $env:SIGNATURE=$(cat "$env:SIGNATURE_FILEPATH")
+      #     $env:TIMESTAMP=$(date +'%Y-%m-%dT%H:%M:%S')
+
+      #     $env:GIST="{ url: '$env:URL', version: '$env:PACKAGE_VERSION', notes: '$env:NOTES', pub_date: '$env:TIMESTAMP', signature: '$env:SIGNATURE' }"
+      #     $env:GIST.Replace("'", '"')
+
+      #     echo $env:GIST

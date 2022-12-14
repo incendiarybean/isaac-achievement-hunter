@@ -4,6 +4,7 @@ import Customisation from "./customisation";
 import { ExternalClickHandler } from "../../../../hooks/externalClickHandler";
 import { GitHubIcon } from "../../common/common";
 import type { NavigationComponent } from "@types";
+import { openBrowser } from "../../../../common/utils";
 
 const DesktopNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -44,23 +45,29 @@ const DesktopNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
                     </li>
 
                     <li>
-                        <a
+                        <button
                             className="px-2 hover:text-sky-500 dark:hover:text-sky-400"
-                            href="https://benweare.co.uk/api/docs"
+                            onClick={() =>
+                                openBrowser("https://benweare.co.uk/api/docs")
+                            }
                         >
                             API Docs
-                        </a>
+                        </button>
                     </li>
                     <li className="flex items-center">
-                        <a
-                            href="https://github.com/incendiarybean/isaac-achievement-hunter"
+                        <button
                             className="px-2 block text-slate-400 hover:text-skysky-500 dark:hover:text-sky-500"
+                            onClick={() =>
+                                openBrowser(
+                                    "https://github.com/incendiarybean/isaac-achievement-hunter"
+                                )
+                            }
                         >
                             <span className="sr-only">
                                 Isaac Achievement Hunter - Github
                             </span>
                             <GitHubIcon />
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </nav>

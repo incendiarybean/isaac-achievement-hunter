@@ -4,6 +4,7 @@ import { createRef, useState } from "react";
 import Customisation from "./customisation";
 import { ExternalClickHandler } from "../../../../hooks/externalClickHandler";
 import type { NavigationComponent } from "@types";
+import { openBrowser } from "../../../../common/utils";
 
 const MobileNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -41,20 +42,26 @@ const MobileNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
                                 <CrossIcon />
                             </button>
                         </div>
-                        <a
+                        <button
                             className="my-1 px-2 hover:text-sky-500 dark:hover:text-sky-400 flex items-center"
-                            href="https://benweare.co.uk/api/docs"
+                            onClick={() =>
+                                openBrowser("https://benweare.co.uk/api/docs")
+                            }
                         >
                             <DocsIcon />
                             <span className="ml-2">API Docs</span>
-                        </a>
-                        <a
+                        </button>
+                        <button
                             className="my-1 px-2 hover:text-sky-500 dark:hover:text-sky-400 flex"
-                            href="https://github.com/incendiarybean/isaac-achievement-hunter"
+                            onClick={() =>
+                                openBrowser(
+                                    "https://github.com/incendiarybean/isaac-achievement-hunter"
+                                )
+                            }
                         >
                             <GitHubIcon />
                             <span className="ml-2">GitHub</span>
-                        </a>
+                        </button>
                         <div className="border-t border-zinc-800 px-2 mr-2">
                             <Customisation
                                 {...{

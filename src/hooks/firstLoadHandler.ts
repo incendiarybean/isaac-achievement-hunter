@@ -60,28 +60,29 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
          */
         const generateWikiData = (tableRows: string[]): WikiData[] => {
             const wikiArticles: WikiData[] = [];
-            tableRows.forEach((row) => {
-                const container = document.createElement("tr");
-                container.innerHTML = row;
-                const rowData = container.querySelectorAll("td");
+            if (tableRows) {
+                tableRows.forEach((row) => {
+                    const container = document.createElement("tr");
+                    container.innerHTML = row;
+                    const rowData = container.querySelectorAll("td");
 
-                if (rowData[0]) {
-                    const { children } = rowData[0];
+                    if (rowData[0]) {
+                        const { children } = rowData[0];
 
-                    const url =
-                        (Array.from(children).filter(
-                            (child) => child.nodeName === "A"
-                        )[0] as HTMLAnchorElement) || "";
+                        const url =
+                            (Array.from(children).filter(
+                                (child) => child.nodeName === "A"
+                            )[0] as HTMLAnchorElement) || "";
 
-                    const data = {
-                        url: url.pathname || "",
-                        helper: rowData[3].innerText || "",
-                        name: rowData[4].innerText.split("PS4")[0] || "",
-                    };
-                    wikiArticles.push(data);
-                }
-            });
-
+                        const data = {
+                            url: url.pathname || "",
+                            helper: rowData[3].innerText || "",
+                            name: rowData[4].innerText.split("PS4")[0] || "",
+                        };
+                        wikiArticles.push(data);
+                    }
+                });
+            }
             return wikiArticles;
         };
 
@@ -96,7 +97,6 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
             }
 
             const params = new URLSearchParams(paramObject);
-
             const response = await fetch(
                 `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900&${params}`
             )
@@ -114,6 +114,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
                 })
                 .catch((e) => {
                     setError(true);
+                    // TODO -> Handle this Error
                     return {
                         steam: [],
                         wiki: [],
@@ -121,13 +122,15 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
                 });
 
             const { steam, wiki } = response;
-
-            const achievementList = wiki.map((record) => ({
-                ...steam.filter(
-                    (item: Achievement) => item.name === record.name
-                )[0],
-                ...record,
-            }));
+            const achievementList =
+                wiki.length > 0
+                    ? wiki.map((record) => ({
+                          ...steam.filter(
+                              (item: Achievement) => item.name === record.name
+                          )[0],
+                          ...record,
+                      }))
+                    : steam;
 
             setCollatedData(achievementList);
 

@@ -2,7 +2,7 @@ import { checkUpdate, installUpdate } from "@tauri-apps/api/updater";
 import { useEffect, useState } from "react";
 
 import type { UpdateManifest } from "@tauri-apps/api/updater";
-import { invoke } from "@tauri-apps/api";
+import { openBrowser } from "../../../common/utils";
 import { relaunch } from "@tauri-apps/api/process";
 
 const AutoUpdater = () => {
@@ -47,9 +47,7 @@ const AutoUpdater = () => {
                 <button
                     className="text-sky-300 hover:text-sky-400 text-xs uppercase items-center"
                     onClick={() => {
-                        invoke("open_browser", {
-                            siteName: updateManifest.body,
-                        });
+                        openBrowser(updateManifest.body);
                     }}
                 >
                     View Changelog
