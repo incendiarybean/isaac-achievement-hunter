@@ -1,6 +1,6 @@
 [package]
 name = "isaac-achievement-hunter"
-version = "0.2.2"
+version = "0.2.3"
 description = "An app for tracking Steam achievements in Binding of Isaac: Repentance"
 authors = ["Benjamin Weare"]
 license = "MIT"

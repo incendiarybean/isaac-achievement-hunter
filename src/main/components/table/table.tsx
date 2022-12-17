@@ -22,7 +22,7 @@ const Table = ({ stage, currentPageData }: TableComponent) => {
                                         `${bindingOfIsaacWikiUrl}${data.url}`
                                     )
                                 }
-                                className="overflow-auto group-hover:scale-105 group-hover:dark:bg-zinc-700 transition-transform duration-150 ease-in-out bg-white dark:bg-zinc-700 shadow-lg divide-x dark:divide-zinc-600 flex flex-row w-full text-left my-2 h-16 text-zinc-900 dark:text-white rounded"
+                                className="overflow-auto group-hover:scale-105 group-hover:dark:bg-zinc-900/60 transition-transform duration-150 ease-in-out bg-white dark:bg-zinc-900/60 shadow-lg divide-x dark:divide-zinc-600 flex flex-row w-full text-left my-2 h-16 text-zinc-900 dark:text-white rounded"
                             >
                                 <p className="flex-none w-16 h-full flex justify-center items-center ">
                                     <img

@@ -102,6 +102,7 @@ export const DocsIcon = () => (
         xmlns="http://www.w3.org/2000/svg"
     >
         <g
+            strokeWidth="1.5"
             fill="none"
             fillRule="evenodd"
             stroke="currentColor"

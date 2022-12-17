@@ -8,7 +8,7 @@
     },
     "package": {
         "productName": "Isaac Achievement Hunter",
-        "version": "0.2.2"
+        "version": "0.2.3"
     },
     "tauri": {
         "allowlist": {
@@ -33,7 +33,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "com.BenWeare.dev",
+            "identifier": "uk.co.BenWeare",
             "publisher": "Benjamin Weare",
             "longDescription": "",
             "macOS": {
