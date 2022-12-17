@@ -16,7 +16,7 @@ jobs:
       TAURI_PRIVATE_KEY: ${{ secrets.TAURI_KEY }}
       TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      REACT_APP_IAH_ENDPOINT: "https://benweare.co.uk"
+      REACT_APP_IAH_ENDPOINT: "https://dev.benweare.co.uk"
 
     runs-on: ${{ matrix.platform }}
     steps:
