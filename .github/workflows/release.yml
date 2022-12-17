@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           echo "REACT_APP_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
-          echo "APP VERSION: ${{ env.REACT_APP_VERSION }}"
+          echo "VERSION: $(node -p "require('./package.json').version")"
 
       - name: ⚒️ Build the Tauri Application
         uses: tauri-apps/tauri-action@v0
