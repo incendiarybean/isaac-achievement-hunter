@@ -16,12 +16,16 @@ jobs:
       TAURI_PRIVATE_KEY: ${{ secrets.TAURI_KEY }}
       TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      REACT_APP_IAH_ENDPOINT: "https://dev.benweare.co.uk"
+      REACT_APP_IAH_ENDPOINT: "https://benweare.co.uk"
 
     runs-on: ${{ matrix.platform }}
     steps:
       - name: 🛒 Checkout Repository
         uses: actions/checkout@v3
+
+      - name: 🔎 Get Package version
+        run: |
+          echo "REACT_APP_VERSION=$(grep '"version"' package.json | cut -d '"' -f 4 | head -n 1 )" >> $GITHUB_ENV
 
       - name: ⬇️ Download and Install Ubuntu dependencies
         if: matrix.platform == 'ubuntu-latest'

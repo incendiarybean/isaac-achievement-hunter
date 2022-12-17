@@ -38,7 +38,7 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col bg-white dark:bg-zinc-700 border-l-4 border-amber-500 shadow-lg p-2">
+                <div className="flex flex-col bg-white dark:bg-zinc-900/60 border-l-4 border-amber-500 shadow-lg p-2">
                     <h1 className="p-2 text-md font-bold tracking-wide leading-relaxed text-amber-400 dark:text-amber-500">
                         Achievement Tracking is currently paused.
                     </h1>
