@@ -109,4 +109,4 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GIST_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           "https://api.github.com/gists/d3870a1b591ff30a9ea9f26f9a7e6b3c" \
-          -d '{"description":"test!","public":true,"files":{"iah-au.json":{"content":${{ env.GIST_DATA }}}}}'
+          -d '{"description":"Isaac Achievement Hunter - Auto Updater","public":true,"files":{"iah-au.json":{"content":${{ env.GIST_DATA }}}}}'
