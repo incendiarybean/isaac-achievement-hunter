@@ -46,6 +46,12 @@ jobs:
           echo "REACT_APP_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
           echo "APP_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
+      - name: Cry about package version?
+        shell: bash
+        run: |
+          echo "$REACT_APP_VERSION"
+          echo "${{ env.REACT_APP_VERSION }}"
+
       - name: ⚙️ Configuring Rust
         uses: dtolnay/rust-toolchain@stable
 
@@ -60,19 +66,26 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev
 
+      - name: Cry about package version 2?
+        shell: bash
+        run: |
+          echo "$REACT_APP_VERSION"
+          echo "${{ env.REACT_APP_VERSION }}"
+
       - name: ⚒️ Build the Tauri Application
         uses: tauri-apps/tauri-action@v0
         with:
           tagName: v__VERSION__
           releaseName: "[${{ secrets.RELEASE_TYPE }}] __VERSION__ - Isaac Achievement Hunter"
           releaseBody: "To be updated with a Changelog!"
-          releaseDraft: false
+          releaseDraft: true
           prerelease: false
 
       - name: 🔬 Get Linux Application signature
         id: UBUNTU_SIG
         if: matrix.platform == 'ubuntu-latest'
         run: |
+          FILE=$(find "./src-tauri/target/release/bundle/" -name "*_amd64.AppImage.tar.gz.sig")
           echo "UBUNTU_SIG=$(cat "./src-tauri/target/release/bundle/appimage/Isaac Achievement Hunter_${{ needs.release.outputs.APP_VERSION }}_amd64.AppImage.tar.gz")" >> $GITHUB_OUTPUT
 
       - name: 🔬 Get Windows Application signature
