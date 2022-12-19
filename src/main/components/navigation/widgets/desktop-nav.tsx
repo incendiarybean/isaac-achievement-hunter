@@ -57,7 +57,7 @@ const DesktopNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
                     </li>
                     <li className="flex items-center">
                         <button
-                            className="px-2 block text-slate-400 hover:text-skysky-500 dark:hover:text-sky-500"
+                            className="px-2 block dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-500"
                             onClick={() =>
                                 openBrowser(
                                     "https://github.com/incendiarybean/isaac-achievement-hunter"

@@ -49,7 +49,7 @@ const Error = ({ steamDetails }: ErrorComponent) => {
     };
 
     return (
-        <div className="flex flex-col bg-white dark:bg-zinc-900/60 border-l-4 border-amber-500 mt-10 p-4 shadow">
+        <div className="flex flex-col bg-zinc-200 dark:bg-zinc-900/60 border-l-4 border-amber-500 mt-10 p-4 shadow">
             <h1 className="p-2 text-md font-bold tracking-wide leading-relaxed text-amber-400 dark:text-amber-500">
                 There was an error with retrieving your achievements:
             </h1>

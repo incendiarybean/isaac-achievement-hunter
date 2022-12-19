@@ -118,9 +118,11 @@ const Filter = ({
             <div className="relative z-20 flex flex-row">
                 <button
                     onClick={() => showFilter(!filter)}
-                    className={`bg-white dark:bg-zinc-900 ${
-                        filter && "border-b border-sky-400 "
-                    } text-xs uppercase font-medium flex items-center  dark:hover:bg-white dark:hover:text-slate-900 rounded px-2 shadow`}
+                    className={`bg-slate-100 dark:bg-zinc-900 ${
+                        filter
+                            ? "border-b-2 border-sky-400 dark:border-sky-400 "
+                            : "border border-slate-300 dark:border-zinc-900 "
+                    } text-xs uppercase font-medium flex items-center hover:bg-zinc-200 dark:hover:bg-zinc-200 dark:hover:text-slate-900 rounded px-2 shadow`}
                 >
                     <span>Filter</span>
                     <svg
@@ -174,10 +176,10 @@ const Filter = ({
                 <div hidden={!filter} className="absolute top-5 w-full fade-in">
                     <div
                         ref={filterElement}
-                        className="text-sm my-2 bg-white dark:bg-zinc-900 rounded p-4 w-56 shadow"
+                        className="text-sm my-2 bg-slate-100 border border-slate-300 dark:border-zinc-900 dark:bg-zinc-900 rounded p-4 w-56 shadow"
                     >
                         <input
-                            className="border rounded w-full mb-3 px-2 p-1 dark:bg-slate-800 dark:text-white"
+                            className="border font-light placeholder:text-black dark:placeholder:text-white rounded w-full mb-3 px-2 p-1 dark:bg-slate-800 dark:text-white"
                             placeholder="search"
                             onChange={({ target }) =>
                                 setFilters((filters: Filters) => ({

@@ -29,7 +29,7 @@ export const FilterButton = ({
             ${
                 !active &&
                 !inline &&
-                "border-green-500 text-green-500 hover:bg-green-600 hover:text-green-100"
+                "border-green-600 text-green-600 hover:bg-green-500 hover:text-white dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-green-100"
             }
             uppercase text-xs border rounded
         `}

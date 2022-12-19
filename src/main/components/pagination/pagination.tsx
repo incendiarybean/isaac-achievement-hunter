@@ -91,11 +91,11 @@ const Pagination = ({
                 <div className="flex justify-around">
                     <button
                         onClick={() => handleChangePage(currentPage - 1)}
-                        className="border w-24 rounded-l-sm border-sky-300 text-sky-300 hover:bg-sky-600 dark:border-sky-300 dark:text-sky-300 dark:hover:bg-sky-600 hover:text-sky-100"
+                        className="border w-24 rounded-l-sm border-sky-500 text-sky-500 hover:bg-sky-600 dark:border-sky-300 dark:text-sky-300 dark:hover:bg-sky-600 hover:text-white"
                     >
                         Back
                     </button>
-                    <div className="w-full border-sky-300 text-sky-300 dark:border-sky-300 dark:text-sky-300 flex divide-x divide-sky-500 dark:divide-sky-300">
+                    <div className="w-full border-sky-500 text-sky-500 dark:border-sky-300 dark:text-sky-300 flex divide-x divide-sky-500 dark:divide-sky-300">
                         {Object.keys(pages).map((key, index) => (
                             <PageRange
                                 key={`pagination-button-${key}`}
@@ -105,7 +105,7 @@ const Pagination = ({
                     </div>
                     <button
                         onClick={() => handleChangePage(currentPage + 1)}
-                        className="border w-24 rounded-r-sm border-sky-300 text-sky-300 hover:bg-sky-600 dark:border-sky-300 dark:text-sky-300 dark:hover:bg-sky-600 hover:text-sky-100"
+                        className="border w-24 rounded-r-sm border-sky-500 text-sky-500 hover:bg-sky-600 dark:border-sky-300 dark:text-sky-300 dark:hover:bg-sky-600 hover:text-white"
                     >
                         Next
                     </button>
