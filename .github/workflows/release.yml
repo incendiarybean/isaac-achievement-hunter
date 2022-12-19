@@ -66,21 +66,21 @@ jobs:
           tagName: v__VERSION__
           releaseName: "[${{ secrets.RELEASE_TYPE }}] __VERSION__ - Isaac Achievement Hunter"
           releaseBody: "To be updated with a Changelog!"
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
 
       - name: 🔬 Get Linux Application signature
         id: UBUNTU_SIG
         if: matrix.platform == 'ubuntu-latest'
         run: |
-          echo "UBUNTU_SIG=$(cat "./src-tauri/target/release/bundle/appimage/Isaac Achievement Hunter_${{ env.REACT_APP_VERSION }}_amd64.AppImage.tar.gz")" >> $GITHUB_OUTPUT
+          echo "UBUNTU_SIG=$(cat "./src-tauri/target/release/bundle/appimage/Isaac Achievement Hunter_${{ needs.release.outputs.APP_VERSION }}_amd64.AppImage.tar.gz")" >> $GITHUB_OUTPUT
 
       - name: 🔬 Get Windows Application signature
         id: WINDOWS_SIG
         if: matrix.platform == 'windows-latest'
         shell: bash
         run: |
-          echo "WINDOWS_SIG=$(cat "./src-tauri/target/release/bundle/msi/Isaac Achievement Hunter_${{ env.REACT_APP_VERSION }}_x64_en-US.msi.zip.sig")" >> $GITHUB_OUTPUT
+          echo "WINDOWS_SIG=$(cat "./src-tauri/target/release/bundle/msi/Isaac Achievement Hunter_${{ needs.release.outputs.APP_VERSION }}_x64_en-US.msi.zip.sig")" >> $GITHUB_OUTPUT
 
   updater:
     runs-on: "ubuntu-latest"
