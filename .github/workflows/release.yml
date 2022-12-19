@@ -74,7 +74,7 @@ jobs:
         id: UBUNTU_SIG
         if: matrix.platform == 'ubuntu-latest'
         run: |
-          FILE=$(find "./src-tauri/target/release/bundle/msi" -name "*.sig")
+          FILE=$(find "./src-tauri/target/release/bundle/appimage" -name "*.sig")
           echo "UBUNTU_SIG=$(cat $FILE)" >> $GITHUB_OUTPUT
 
       - name: 🔬 Get Windows Application signature
