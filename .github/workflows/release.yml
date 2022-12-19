@@ -66,7 +66,7 @@ jobs:
           tagName: v__VERSION__
           releaseName: "[${{ secrets.RELEASE_TYPE }}] __VERSION__ - Isaac Achievement Hunter"
           releaseBody: "To be updated with a Changelog!"
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
 
       - name: 🔬 Get Linux Application signature
