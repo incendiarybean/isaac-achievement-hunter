@@ -75,7 +75,7 @@ jobs:
         if: matrix.platform == 'ubuntu-latest'
         run: |
           FILE=$(find "./src-tauri/target/release/bundle/appimage" -name "*.sig")
-          echo "UBUNTU_SIG=$(cat $FILE)" >> $GITHUB_OUTPUT
+          echo "UBUNTU_SIG=$(cat "$FILE")" >> $GITHUB_OUTPUT
 
       - name: 🔬 Get Windows Application signature
         id: WINDOWS_SIG
@@ -83,7 +83,7 @@ jobs:
         shell: bash
         run: |
           FILE=$(find "./src-tauri/target/release/bundle/msi" -name "*.sig")
-          echo "WINDOWS_SIG=$(cat $FILE)" >> $GITHUB_OUTPUT
+          echo "WINDOWS_SIG=$(cat "$FILE")" >> $GITHUB_OUTPUT
 
   updater:
     runs-on: "ubuntu-latest"
