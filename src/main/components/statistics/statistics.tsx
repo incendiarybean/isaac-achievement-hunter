@@ -13,7 +13,7 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
     return (
         <div>
             {steamDetails.steamUserId ? (
-                <div className="z-0 mx-4 mb-4">
+                <div className="z-0 mx-4 mb-3">
                     <div className="text-lg text-black dark:text-white font-normal dark:font-extralight tracking-wide border-b border-zinc-600 mb-2 flex justify-between items-end">
                         <h1>Achievements...</h1>
                         <p className="hidden sm:block text-xs mr-1">Percentage of Completed Achievements</p>

@@ -1,6 +1,6 @@
 {
     "name": "isaac-achievement-hunter",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "private": true,
     "dependencies": {
         "@tauri-apps/api": "^1.2.0",

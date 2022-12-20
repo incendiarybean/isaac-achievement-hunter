@@ -117,7 +117,7 @@ const Filter = ({ collatedData, filters, filteredData, setFilteredData, setCurre
                         filter
                             ? "border-b-2 border-sky-400 dark:border-sky-400 bg-slate-200"
                             : "border border-slate-300 dark:border-zinc-900 "
-                    } text-xs uppercase font-medium flex items-center hover:bg-zinc-200 dark:hover:bg-zinc-200 dark:hover:text-slate-900 rounded px-2 shadow`}
+                    } mt-1 h-6 text-xs uppercase font-medium flex items-center hover:bg-zinc-200 dark:hover:bg-zinc-200 dark:hover:text-slate-900 rounded px-2 shadow`}
                 >
                     <span>Filter</span>
                     <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg">
@@ -128,44 +128,47 @@ const Filter = ({ collatedData, filters, filteredData, setFilteredData, setCurre
                         </g>
                     </svg>
                 </button>
-                {filters.query && (
-                    <FilterButton
-                        {...{
-                            handler: handleQuery,
-                            filter: filters.query,
-                            inline: true,
-                        }}
-                    />
-                )}
-                {filters.content.map((filterBy) => (
-                    <FilterButton
-                        key={`${filterBy}-inline-filters`}
-                        {...{
-                            handler: handleContent,
-                            filter: filterBy,
-                            inline: true,
-                        }}
-                    />
-                ))}
-                {filters.collection.map((filterBy) => (
-                    <FilterButton
-                        key={`${filterBy}-inline-filters`}
-                        {...{
-                            handler: handleFilters,
-                            filter: filterBy,
-                            inline: true,
-                        }}
-                    />
-                ))}
-                {!!filters.pagination && (
-                    <FilterButton
-                        {...{
-                            handler: handlePagination,
-                            filter: filters.pagination,
-                            inline: true,
-                        }}
-                    />
-                )}
+
+                <div className="w-full flex flex-wrap justify-start">
+                    {filters.query && (
+                        <FilterButton
+                            {...{
+                                handler: handleQuery,
+                                filter: filters.query,
+                                inline: true,
+                            }}
+                        />
+                    )}
+                    {filters.content.map((filterBy) => (
+                        <FilterButton
+                            key={`${filterBy}-inline-filters`}
+                            {...{
+                                handler: handleContent,
+                                filter: filterBy,
+                                inline: true,
+                            }}
+                        />
+                    ))}
+                    {filters.collection.map((filterBy) => (
+                        <FilterButton
+                            key={`${filterBy}-inline-filters`}
+                            {...{
+                                handler: handleFilters,
+                                filter: filterBy,
+                                inline: true,
+                            }}
+                        />
+                    ))}
+                    {!!filters.pagination && (
+                        <FilterButton
+                            {...{
+                                handler: handlePagination,
+                                filter: filters.pagination,
+                                inline: true,
+                            }}
+                        />
+                    )}
+                </div>
 
                 <div hidden={!filter} className="animate-fadeIn absolute top-5 w-auto fade-in">
                     <div className="text-sm my-2 bg-slate-100 border border-slate-300 dark:border-zinc-900 dark:bg-zinc-900 rounded p-4 w-56 shadow">

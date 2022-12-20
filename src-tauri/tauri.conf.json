@@ -8,7 +8,7 @@
     },
     "package": {
         "productName": "Isaac Achievement Hunter",
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     "tauri": {
         "allowlist": {
@@ -26,13 +26,7 @@
                 "depends": []
             },
             "externalBin": [],
-            "icon": [
-                "icons/32x32.png",
-                "icons/128x128.png",
-                "icons/128x128@2x.png",
-                "icons/icon.icns",
-                "icons/icon.ico"
-            ],
+            "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
             "identifier": "uk.co.BenWeare",
             "publisher": "Benjamin Weare",
             "longDescription": "",
@@ -57,9 +51,7 @@
         },
         "updater": {
             "active": true,
-            "endpoints": [
-                "https://gist.githubusercontent.com/incendiarybean/d3870a1b591ff30a9ea9f26f9a7e6b3c/raw"
-            ],
+            "endpoints": ["https://gist.githubusercontent.com/incendiarybean/d3870a1b591ff30a9ea9f26f9a7e6b3c/raw"],
             "dialog": false,
             "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVBM0I4NDNDOTE2RTkyQzYKUldUR2ttNlJQSVE3V3NQOUFMUVo5Smp2Vy9qSDRFeEkvaW5Kdk11ZUlSMGVNNUg1SE9BQ1h4ZmYK"
         },
