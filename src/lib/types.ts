@@ -7,6 +7,11 @@ export interface TableComponent {
     filters: Filters;
 }
 
+export interface TableWidgets {
+    currentPageData: CollatedData[];
+    url: string;
+}
+
 export interface WikiComponent {
     wikiOpen: boolean;
     setWikiOpen: Function;

@@ -7,10 +7,7 @@ import React, { useEffect } from "react";
  * @param ref The HTML element you're expecting to keep focus
  * @param action The callback function to return a value
  */
-export const ExternalClickHandler = (
-    ref: React.RefObject<HTMLDivElement>,
-    action: Function
-) => {
+export const ExternalClickHandler = (ref: React.RefObject<HTMLDivElement>, action: Function) => {
     useEffect(() => {
         const handleClickOutside = ({ target }: MouseEvent) => {
             if (ref && ref.current && !ref.current.contains(target as Node)) {

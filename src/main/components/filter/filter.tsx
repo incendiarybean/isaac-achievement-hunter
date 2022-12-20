@@ -4,14 +4,7 @@ import { createRef, useEffect, useState } from "react";
 import { ExternalClickHandler } from "../../../hooks/externalClickHandler";
 import FilterButton from "./filter-button";
 
-const Filter = ({
-    collatedData,
-    filters,
-    filteredData,
-    setFilteredData,
-    setCurrentPage,
-    setFilters,
-}: FilterComponent) => {
+const Filter = ({ collatedData, filters, filteredData, setFilteredData, setCurrentPage, setFilters }: FilterComponent) => {
     const [filter, showFilter] = useState<boolean>(false);
 
     useEffect(() => {
@@ -19,38 +12,22 @@ const Filter = ({
         const { collection, content, query } = filters;
 
         if (content.length > 0) {
-            filteredItems = [
-                ...filteredItems.filter((item) =>
-                    content.includes(item.content)
-                ),
-            ];
+            filteredItems = [...filteredItems.filter((item) => content.includes(item.content))];
         }
 
         // TODO -> Better way of doing this
         switch (true) {
             case collection.includes("complete"):
-                filteredItems = [
-                    ...filteredItems.filter(({ achieved }) => achieved === 1),
-                ];
+                filteredItems = [...filteredItems.filter(({ achieved }) => achieved === 1)];
                 break;
             case collection.includes("incomplete"):
-                filteredItems = [
-                    ...filteredItems.filter(({ achieved }) => achieved === 0),
-                ];
+                filteredItems = [...filteredItems.filter(({ achieved }) => achieved === 0)];
                 break;
             case collection.includes("daily"):
-                filteredItems = [
-                    ...filteredItems.filter(({ helper }) =>
-                        /^(.*?)daily(.*?)$/gi.test(helper)
-                    ),
-                ];
+                filteredItems = [...filteredItems.filter(({ helper }) => /^(.*?)daily(.*?)$/gi.test(helper))];
                 break;
             case collection.includes("challenge"):
-                filteredItems = [
-                    ...filteredItems.filter(({ helper }) =>
-                        /^(.*?)challenge\s#\d{2}(.*?)$/g.test(helper)
-                    ),
-                ];
+                filteredItems = [...filteredItems.filter(({ helper }) => /^(.*?)challenge\s#\d{2}(.*?)$/g.test(helper))];
                 break;
             default:
                 break;
@@ -59,12 +36,7 @@ const Filter = ({
         if (query) {
             try {
                 const find = new RegExp(`${query}`, "gi");
-                filteredItems = [
-                    ...filteredItems.filter(
-                        ({ displayName, helper }) =>
-                            displayName.match(find) || helper.match(find)
-                    ),
-                ];
+                filteredItems = [...filteredItems.filter(({ displayName, helper }) => displayName.match(find) || helper.match(find))];
             } catch (e) {
                 // TODO -> SANITISE input, or handle response better
                 console.log("BAD OUTPUT");
@@ -148,19 +120,8 @@ const Filter = ({
                     } text-xs uppercase font-medium flex items-center hover:bg-zinc-200 dark:hover:bg-zinc-200 dark:hover:text-slate-900 rounded px-2 shadow`}
                 >
                     <span>Filter</span>
-                    <svg
-                        height="21"
-                        viewBox="0 0 21 21"
-                        width="21"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <g
-                            fill="none"
-                            fillRule="evenodd"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
+                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none" fillRule="evenodd" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
                             <path d="m4.5 7.5h12" />
                             <path d="m6.5 10.5h8" />
                             <path d="m8.5 13.5h4" />
@@ -228,9 +189,7 @@ const Filter = ({
                                         {...{
                                             handler: handleContent,
                                             filter: filterBy,
-                                            active: filters.content.includes(
-                                                filterBy
-                                            ),
+                                            active: filters.content.includes(filterBy),
                                         }}
                                     />
                                 ))}
@@ -243,9 +202,7 @@ const Filter = ({
                                         {...{
                                             handler: handleFilters,
                                             filter: filterBy,
-                                            active: filters.collection.includes(
-                                                filterBy
-                                            ),
+                                            active: filters.collection.includes(filterBy),
                                         }}
                                     />
                                 ))}
@@ -258,9 +215,7 @@ const Filter = ({
                                         {...{
                                             handler: handlePagination,
                                             filter: itemsPerPage,
-                                            active:
-                                                filters.pagination ===
-                                                itemsPerPage,
+                                            active: filters.pagination === itemsPerPage,
                                         }}
                                     />
                                 ))}

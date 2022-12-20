@@ -12,11 +12,7 @@ export const FilterButton = ({
     <button
         onClick={() => handler(filter)}
         className={`
-            ${
-                inline
-                    ? "flex justify-between items-center pl-2 ml-2"
-                    : "text-center"
-            } 
+            ${inline ? "flex justify-between items-center pl-2 ml-2" : "text-center"} 
             ${inline ? "w-auto" : "w-24"}
             ${
                 inline &&
@@ -36,19 +32,8 @@ export const FilterButton = ({
     >
         {filter}
         <div hidden={!inline}>
-            <svg
-                height="21"
-                viewBox="0 0 21 21"
-                width="21"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <g
-                    fill="none"
-                    fillRule="evenodd"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                >
+            <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" fillRule="evenodd" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
                     <path d="m7.5 7.5 6 6" />
                     <path d="m13.5 7.5-6 6" />
                 </g>

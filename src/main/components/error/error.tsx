@@ -12,18 +12,13 @@ const Error = ({ steamDetails }: ErrorComponent) => {
             name: "Web API",
             reasons: [
                 <span>The Web API is currently down.</span>,
-                <span>
-                    You're using a proxy service that has blocked this request.
-                </span>,
+                <span>You're using a proxy service that has blocked this request.</span>,
                 <span>An Administrator has blocked this request.</span>,
             ],
         },
         steamApi: {
             name: "Steam API",
-            reasons: [
-                <span>The Steam API is currently down.</span>,
-                <span>The Web API is currently down.</span>,
-            ],
+            reasons: [<span>The Steam API is currently down.</span>, <span>The Web API is currently down.</span>],
         },
         steamAccount: {
             name: "Steam User ID",
@@ -54,18 +49,13 @@ const Error = ({ steamDetails }: ErrorComponent) => {
                 There was an error with retrieving your achievements:
             </h1>
             <div className="mx-2 mb-4">
-                <h2 className="text-sm font-semibold">
-                    Please check the status of each service below.
-                </h2>
+                <h2 className="text-sm font-semibold">Please check the status of each service below.</h2>
                 <div className="text-sm">
                     <div className="p-2 divide-y">
                         {Object.keys(errorStatusInfo).map((key) => (
                             <div className="py-2" key={`error-${key}`}>
                                 <div className="flex">
-                                    <StatusChecker
-                                        status={serviceStatus[key]}
-                                        loading={serviceStatus.loading}
-                                    />
+                                    <StatusChecker status={serviceStatus[key]} loading={serviceStatus.loading} />
                                     <p className="ml-4 text-sky-600 dark:text-sky-400 text-md uppercase font-medium ">
                                         {errorStatusInfo[key].name}
                                     </p>
@@ -74,18 +64,9 @@ const Error = ({ steamDetails }: ErrorComponent) => {
                                     <div className="ml-12">
                                         <h3>Reasons for this:</h3>
                                         <ul className="list-disc ml-5">
-                                            {errorStatusInfo[key].reasons.map(
-                                                (
-                                                    listItem: React.ReactNode,
-                                                    index: number
-                                                ) => (
-                                                    <li
-                                                        key={`errorStatus-${key}-${index}`}
-                                                    >
-                                                        {listItem}
-                                                    </li>
-                                                )
-                                            )}
+                                            {errorStatusInfo[key].reasons.map((listItem: React.ReactNode, index: number) => (
+                                                <li key={`errorStatus-${key}-${index}`}>{listItem}</li>
+                                            ))}
                                         </ul>
                                     </div>
                                 )}

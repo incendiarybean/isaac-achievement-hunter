@@ -7,13 +7,7 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
     const [dismissed, setDismissed] = useState<boolean>(false);
 
     useEffect(() => {
-        setCompleted(
-            Math.floor(
-                (collatedData.filter((data) => data.achieved === 1).length /
-                    collatedData.length) *
-                    100
-            )
-        );
+        setCompleted(Math.floor((collatedData.filter((data) => data.achieved === 1).length / collatedData.length) * 100));
     }, [collatedData]);
     //76561198065815181
     return (
@@ -22,14 +16,10 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
                 <div className="z-0 mx-4 mb-4">
                     <div className="text-lg text-black dark:text-white font-extralight tracking-wide border-b border-zinc-600 mb-2 flex justify-between items-end">
                         <h1>Achievements...</h1>
-                        <p className="hidden sm:block text-xs mr-1">
-                            Percentage of Completed Achievements
-                        </p>
+                        <p className="hidden sm:block text-xs mr-1">Percentage of Completed Achievements</p>
                     </div>
                     <div className="relative rounded-full w-full bg-slate-200 dark:bg-zinc-600 shadow-inner h-8 p-1 items-center flex z-0 ">
-                        <p className="z-0 absolute right-4 text-xs">
-                            {completed}%
-                        </p>
+                        <p className="z-0 absolute right-4 text-xs">{completed}%</p>
                         <div
                             className="z-0 transition-width ease-in-out duration-500 h-full bg-gradient-to-r from-sky-400 to-sky-500 rounded-full shadow flex justify-end min-w-[1.55rem]"
                             style={{
@@ -46,10 +36,7 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
                         </h1>
                         <div className="mx-2 mb-4 -mt-2">
                             <div className="text-sm tracking-wide leading-loose">
-                                <p>
-                                    Please enter your Steam User ID into the
-                                    settings!
-                                </p>
+                                <p>Please enter your Steam User ID into the settings!</p>
                                 <p>
                                     You can get this from{" "}
                                     <a
@@ -60,8 +47,7 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
                                     >
                                         SteamDB
                                     </a>
-                                    ; you may need to change your Steam
-                                    account's public settings.
+                                    ; you may need to change your Steam account's public settings.
                                 </p>
                                 <button
                                     className="text-blue-600 dark:text-blue-400 hover:text-blue-400 hover:dark:text-blue-600"

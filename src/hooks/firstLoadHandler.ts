@@ -1,11 +1,4 @@
-import type {
-    Achievement,
-    CollatedData,
-    Filters,
-    Status,
-    SteamDetails,
-    WikiData,
-} from "@types";
+import type { Achievement, CollatedData, Filters, Status, SteamDetails, WikiData } from "@types";
 import { useEffect, useState } from "react";
 
 /**
@@ -63,6 +56,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
          */
         const generateWikiData = (tableRows: string[]): WikiData[] => {
             const wikiArticles: WikiData[] = [];
+
             if (tableRows) {
                 tableRows.forEach((row) => {
                     const container = document.createElement("tr");
@@ -72,16 +66,16 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
                     if (rowData[0]) {
                         const { children } = rowData[0];
 
-                        const url =
-                            (Array.from(children).filter(
-                                (child) => child.nodeName === "A"
-                            )[0] as HTMLAnchorElement) || "";
+                        const url = (Array.from(children).filter((child) => child.nodeName === "A")[0] as HTMLAnchorElement) || "";
 
-                        const data = {
-                            url: url.pathname || "",
-                            helper: rowData[3].innerText || "",
-                            name: rowData[4].innerText.split("PS4")[0] || "",
-                        };
+                        const articleDefaults = (url = "", helper = "", name = "") => ({
+                            url,
+                            helper,
+                            name,
+                        });
+
+                        const data = articleDefaults(url.pathname, rowData[3].innerText, rowData[4].innerText.split("PS4")[0]);
+
                         wikiArticles.push(data);
                     }
                 });
@@ -98,16 +92,20 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
             achievements.map((achievement: Achievement) => {
                 const value = parseInt(achievement.name);
                 const achievementContent = achievement;
-                if (value <= 178) {
-                    achievementContent.content = "Rebirth";
-                } else if (value <= 276) {
-                    achievementContent.content = "Afterbirth";
-                } else if (value <= 403) {
-                    achievementContent.content = "Afterbirth+";
-                } else {
-                    achievementContent.content = "Repentance";
+                switch (true) {
+                    case value <= 178:
+                        achievementContent.content = "Rebirth";
+                        break;
+                    case value <= 276:
+                        achievementContent.content = "Afterbirth";
+                        break;
+                    case value <= 403:
+                        achievementContent.content = "Afterbirth+";
+                        break;
+                    case value >= 404:
+                        achievementContent.content = "Repentance";
+                        break;
                 }
-
                 return achievementContent;
             });
 
@@ -122,9 +120,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
             }
 
             const params = new URLSearchParams(paramObject);
-            const response = await fetch(
-                `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900&${params}`
-            )
+            const response = await fetch(`${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900&${params}`)
                 .then((res) => res.json())
                 .then(({ response }) => {
                     setError(false);
@@ -150,9 +146,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
             const achievementList =
                 wiki.length > 0
                     ? wiki.map((record) => ({
-                          ...steam.filter(
-                              (item: Achievement) => item.name === record.name
-                          )[0],
+                          ...steam.filter((item: Achievement) => item.name === record.name)[0],
                           ...record,
                       }))
                     : steam;

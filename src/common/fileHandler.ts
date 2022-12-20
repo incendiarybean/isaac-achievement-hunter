@@ -9,10 +9,7 @@ export const readFile = (fileName: string): Promise<string> =>
             .catch((e: Error) => reject(e))
     );
 
-export const writeFile = (
-    fileName: string,
-    fileContent: string
-): Promise<boolean> =>
+export const writeFile = (fileName: string, fileContent: string): Promise<boolean> =>
     new Promise<boolean>((resolve, reject) =>
         invoke<boolean>("write_file", {
             fileName,
