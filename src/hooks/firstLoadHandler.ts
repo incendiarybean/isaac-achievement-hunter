@@ -114,13 +114,10 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
          * Sets useState var collatedData
          */
         const getAchievements = async () => {
-            const paramObject: any = {};
-            if (steamDetails.steamUserId) {
-                paramObject["userId"] = steamDetails.steamUserId;
-            }
-
-            const params = new URLSearchParams(paramObject);
-            const response = await fetch(`${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900&${params}`)
+            const { steamUserId } = steamDetails;
+            const response = await fetch(
+                `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900${steamUserId ? "&userId=" + steamUserId : ""}`
+            )
                 .then((res) => res.json())
                 .then(({ response }) => {
                     setError(false);
