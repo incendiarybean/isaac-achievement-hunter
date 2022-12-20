@@ -38,8 +38,11 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
         query: "",
         collection: [],
         collectionOpts: ["complete", "incomplete", "challenge", "daily"],
+        content: ["Rebirth", "Afterbirth", "Afterbirth+", "Repentance"],
+        contentOpts: ["Rebirth", "Afterbirth", "Afterbirth+", "Repentance"],
         pagination: 10,
         paginationOpts: [10, 20, 50],
+        iconsOnly: false,
     });
 
     // Open Error component on failure
@@ -87,6 +90,28 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
         };
 
         /**
+         * This function splits the Achievements into DLC
+         * @param achievements Array of Steam Achievements
+         * @returns {Achievement[]} Achievement - updated Steam Achievement
+         */
+        const getContentData = (achievements: Achievement[]): Achievement[] =>
+            achievements.map((achievement: Achievement) => {
+                const value = parseInt(achievement.name);
+                const achievementContent = achievement;
+                if (value <= 178) {
+                    achievementContent.content = "Rebirth";
+                } else if (value <= 276) {
+                    achievementContent.content = "Afterbirth";
+                } else if (value <= 403) {
+                    achievementContent.content = "Afterbirth+";
+                } else {
+                    achievementContent.content = "Repentance";
+                }
+
+                return achievementContent;
+            });
+
+        /**
          * This function simply fetches the API Endpoint and parses response;
          * Sets useState var collatedData
          */
@@ -108,7 +133,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
                         message: "Fetched Data Successfully... Compiling!",
                     });
                     return {
-                        steam: response.achievements,
+                        steam: getContentData(response.achievements),
                         wiki: generateWikiData(response.wiki),
                     };
                 })
@@ -132,7 +157,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
                       }))
                     : steam;
 
-            setCollatedData(achievementList);
+            setCollatedData(achievementList as CollatedData[]);
 
             setStatus({
                 stage: 3,

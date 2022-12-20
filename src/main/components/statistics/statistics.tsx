@@ -4,6 +4,7 @@ import { StatisticsComponent } from "@types";
 
 const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
     const [completed, setCompleted] = useState<number>(0);
+    const [dismissed, setDismissed] = useState<boolean>(false);
 
     useEffect(() => {
         setCompleted(
@@ -38,29 +39,37 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
                     </div>
                 </div>
             ) : (
-                <div className="rounded flex flex-col bg-slate-100 border border-slate-300 dark:border-zinc-900/60 dark:bg-zinc-900/60 border-l-4 border-l-amber-500 dark:border-l-amber-500 shadow p-2">
-                    <h1 className="p-2 text-md font-bold tracking-wide leading-relaxed text-amber-500 dark:text-amber-500">
-                        Achievement Tracking is currently paused.
-                    </h1>
-                    <div className="mx-2 mb-4 -mt-2">
-                        <div className="text-sm tracking-wide leading-loose">
-                            <p>
-                                Please enter your Steam User ID into the
-                                settings!
-                            </p>
-                            <p>
-                                You can get this from{" "}
-                                <a
+                <div hidden={dismissed}>
+                    <div className="rounded flex flex-col bg-slate-100 border border-slate-300 dark:border-zinc-900/60 dark:bg-zinc-900/60 border-l-4 border-l-amber-500 dark:border-l-amber-500 shadow p-2">
+                        <h1 className="p-2 text-md font-bold tracking-wide leading-relaxed text-amber-500 dark:text-amber-500">
+                            Achievement Tracking is currently paused.
+                        </h1>
+                        <div className="mx-2 mb-4 -mt-2">
+                            <div className="text-sm tracking-wide leading-loose">
+                                <p>
+                                    Please enter your Steam User ID into the
+                                    settings!
+                                </p>
+                                <p>
+                                    You can get this from{" "}
+                                    <a
+                                        className="text-blue-600 dark:text-blue-400 hover:text-blue-400 hover:dark:text-blue-600"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        href="https://steamdb.info/calculator/"
+                                    >
+                                        SteamDB
+                                    </a>
+                                    ; you may need to change your Steam
+                                    account's public settings.
+                                </p>
+                                <button
                                     className="text-blue-600 dark:text-blue-400 hover:text-blue-400 hover:dark:text-blue-600"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    href="https://steamdb.info/calculator/"
+                                    onClick={() => setDismissed(true)}
                                 >
-                                    SteamDB
-                                </a>
-                                ; you may need to change your Steam account's
-                                public settings.
-                            </p>
+                                    Dismiss
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
