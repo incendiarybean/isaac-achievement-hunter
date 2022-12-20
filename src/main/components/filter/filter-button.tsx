@@ -12,7 +12,7 @@ export const FilterButton = ({
     <button
         onClick={() => handler(filter)}
         className={`
-            ${inline ? "flex justify-between items-center pl-2 ml-2" : "text-center"} 
+            ${inline ? "flex justify-between items-center pl-2 m-1" : "text-center"} 
             ${inline ? "w-auto" : "w-24"}
             ${
                 inline &&
