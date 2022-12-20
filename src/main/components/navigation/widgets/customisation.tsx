@@ -51,7 +51,7 @@ const Customisation = ({ steamDetails, setSteamDetails, setSettingsOpen }: Navig
     return (
         <form
             onSubmit={(e) => saveCredentials(e)}
-            className="md:p-4 md:w-96 top-12 right-0 z-40 rounded shadow bg-slate-100 border border-slate-300 dark:border-none dark:bg-zinc-900 w-auto"
+            className="sm:p-4 sm:w-96 top-12 right-0 z-40 rounded shadow bg-slate-100 border border-slate-300 dark:border-none dark:bg-zinc-900 w-auto"
         >
             <h1 className="flex items-center">
                 <SettingsIcon />
