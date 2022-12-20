@@ -1,11 +1,4 @@
-import type {
-    Achievement,
-    CollatedData,
-    Filters,
-    Status,
-    SteamDetails,
-    WikiData,
-} from "@types";
+import type { Achievement, CollatedData, Filters, Status, SteamDetails, WikiData } from "@types";
 import { useEffect, useState } from "react";
 
 /**
@@ -38,8 +31,11 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
         query: "",
         collection: [],
         collectionOpts: ["complete", "incomplete", "challenge", "daily"],
+        content: ["Rebirth", "Afterbirth", "Afterbirth+", "Repentance"],
+        contentOpts: ["Rebirth", "Afterbirth", "Afterbirth+", "Repentance"],
         pagination: 10,
         paginationOpts: [10, 20, 50],
+        iconsOnly: false,
     });
 
     // Open Error component on failure
@@ -60,6 +56,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
          */
         const generateWikiData = (tableRows: string[]): WikiData[] => {
             const wikiArticles: WikiData[] = [];
+
             if (tableRows) {
                 tableRows.forEach((row) => {
                     const container = document.createElement("tr");
@@ -69,16 +66,16 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
                     if (rowData[0]) {
                         const { children } = rowData[0];
 
-                        const url =
-                            (Array.from(children).filter(
-                                (child) => child.nodeName === "A"
-                            )[0] as HTMLAnchorElement) || "";
+                        const url = (Array.from(children).filter((child) => child.nodeName === "A")[0] as HTMLAnchorElement) || "";
 
-                        const data = {
-                            url: url.pathname || "",
-                            helper: rowData[3].innerText || "",
-                            name: rowData[4].innerText.split("PS4")[0] || "",
-                        };
+                        const articleDefaults = (url = "", helper = "", name = "") => ({
+                            url,
+                            helper,
+                            name,
+                        });
+
+                        const data = articleDefaults(url.pathname, rowData[3].innerText, rowData[4].innerText.split("PS4")[0]);
+
                         wikiArticles.push(data);
                     }
                 });
@@ -87,18 +84,39 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
         };
 
         /**
+         * This function splits the Achievements into DLC
+         * @param achievements Array of Steam Achievements
+         * @returns {Achievement[]} Achievement - updated Steam Achievement
+         */
+        const getContentData = (achievements: Achievement[]): Achievement[] =>
+            achievements.map((achievement: Achievement) => {
+                const value = parseInt(achievement.name);
+                const achievementContent = achievement;
+                switch (true) {
+                    case value <= 178:
+                        achievementContent.content = "Rebirth";
+                        break;
+                    case value <= 276:
+                        achievementContent.content = "Afterbirth";
+                        break;
+                    case value <= 403:
+                        achievementContent.content = "Afterbirth+";
+                        break;
+                    case value >= 404:
+                        achievementContent.content = "Repentance";
+                        break;
+                }
+                return achievementContent;
+            });
+
+        /**
          * This function simply fetches the API Endpoint and parses response;
          * Sets useState var collatedData
          */
         const getAchievements = async () => {
-            const paramObject: any = {};
-            if (steamDetails.steamUserId) {
-                paramObject["userId"] = steamDetails.steamUserId;
-            }
-
-            const params = new URLSearchParams(paramObject);
+            const { steamUserId } = steamDetails;
             const response = await fetch(
-                `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900&${params}`
+                `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900${steamUserId ? "&userId=" + steamUserId : ""}`
             )
                 .then((res) => res.json())
                 .then(({ response }) => {
@@ -108,7 +126,7 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
                         message: "Fetched Data Successfully... Compiling!",
                     });
                     return {
-                        steam: response.achievements,
+                        steam: getContentData(response.achievements),
                         wiki: generateWikiData(response.wiki),
                     };
                 })
@@ -125,14 +143,12 @@ export const FirstLoadHandler = (steamDetails: SteamDetails) => {
             const achievementList =
                 wiki.length > 0
                     ? wiki.map((record) => ({
-                          ...steam.filter(
-                              (item: Achievement) => item.name === record.name
-                          )[0],
+                          ...steam.filter((item: Achievement) => item.name === record.name)[0],
                           ...record,
                       }))
                     : steam;
 
-            setCollatedData(achievementList);
+            setCollatedData(achievementList as CollatedData[]);
 
             setStatus({
                 stage: 3,

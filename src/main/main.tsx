@@ -62,6 +62,7 @@ const Body = ({ steamDetails }: MainComponent) => {
                 <div className="px-7">
                     <Table
                         {...{
+                            filters,
                             ...status,
                             currentPageData,
                         }}

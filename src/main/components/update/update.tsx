@@ -41,9 +41,7 @@ const AutoUpdater = () => {
     return (
         <div className="flex w-full bg-red-500/30 h-8 p-1  px-4 shadow backdrop-blur justify-between items-center">
             <div className="flex items-center">
-                <h1 className="px-4 uppercase text-xs">
-                    {updateManifest.version} Available
-                </h1>
+                <h1 className="px-4 uppercase text-xs">{updateManifest.version} Available</h1>
                 <button
                     className="text-sky-300 hover:text-sky-400 text-xs uppercase items-center"
                     onClick={() => {
@@ -60,10 +58,7 @@ const AutoUpdater = () => {
                 >
                     Dismiss
                 </button>
-                <button
-                    onClick={runUpdate}
-                    className="mx-2 text-lime-300 hover:text-lime-500 text-xs uppercase items-center"
-                >
+                <button onClick={runUpdate} className="mx-2 text-lime-300 hover:text-lime-500 text-xs uppercase items-center">
                     Update
                 </button>
             </div>

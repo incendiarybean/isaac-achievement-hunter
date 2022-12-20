@@ -5,7 +5,7 @@ export const LoadingStatus = ({ stage, message }: LoaderComponent) => {
 
     return (
         <div className={`p-4`}>
-            <div className="text-lg font-extralight tracking-wide border-b border-zinc-600 mb-2 flex justify-between items-end">
+            <div className="text-lg font-normal dark:font-extralight tracking-wide border-b border-zinc-600 mb-2 flex justify-between items-end">
                 <h1>Loading...</h1> <p className="text-xs mr-1">{message}</p>
             </div>
             <div className="relative rounded-full w-full bg-slate-300 dark:bg-zinc-600 shadow-inner h-8 p-1 items-center flex overflow-hidden ">

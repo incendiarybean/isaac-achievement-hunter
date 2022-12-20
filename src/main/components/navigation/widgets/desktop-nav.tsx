@@ -21,16 +21,12 @@ const DesktopNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
                             <button
                                 onClick={() => setSettingsOpen(!settingsOpen)}
                                 className={`${
-                                    settingsOpen &&
-                                    "border-b border-sky-400 text-sky-500"
+                                    settingsOpen && "border-b border-sky-400 text-sky-500"
                                 } px-2 hover:text-sky-500 dark:hover:text-sky-400`}
                             >
                                 Settings
                             </button>
-                            <div
-                                hidden={!settingsOpen}
-                                className="animate-fadeIn absolute right-0 top-12"
-                            >
+                            <div hidden={!settingsOpen} className="animate-fadeIn absolute right-0 top-12">
                                 <div>
                                     <Customisation
                                         {...{
@@ -47,9 +43,7 @@ const DesktopNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
                     <li>
                         <button
                             className="px-2 block dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-500"
-                            onClick={() =>
-                                openBrowser("https://benweare.co.uk/api/docs")
-                            }
+                            onClick={() => openBrowser("https://benweare.co.uk/api/docs")}
                         >
                             <span className="sr-only">API Documentation</span>
                             <DocsIcon />
@@ -57,16 +51,10 @@ const DesktopNav = ({ steamDetails, setSteamDetails }: NavigationComponent) => {
                     </li>
                     <li className="flex items-center">
                         <button
-                            className="px-2 block text-slate-400 hover:text-skysky-500 dark:hover:text-sky-500"
-                            onClick={() =>
-                                openBrowser(
-                                    "https://github.com/incendiarybean/isaac-achievement-hunter"
-                                )
-                            }
+                            className="px-2 block dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-500"
+                            onClick={() => openBrowser("https://github.com/incendiarybean/isaac-achievement-hunter")}
                         >
-                            <span className="sr-only">
-                                Isaac Achievement Hunter - Github
-                            </span>
+                            <span className="sr-only">Isaac Achievement Hunter - Github</span>
                             <GitHubIcon />
                         </button>
                     </li>

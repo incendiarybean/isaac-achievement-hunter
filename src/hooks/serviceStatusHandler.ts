@@ -1,9 +1,7 @@
 import { ServiceStatus, SteamDetails } from "@types";
 import { useEffect, useState } from "react";
 
-export const ServiceStatusHandler = (
-    steamDetails: SteamDetails
-): ServiceStatus => {
+export const ServiceStatusHandler = (steamDetails: SteamDetails): ServiceStatus => {
     const [serviceStatus, setServiceStatus] = useState<ServiceStatus>({
         loading: true,
         api: false,
@@ -25,23 +23,17 @@ export const ServiceStatusHandler = (
         const setStatus = async (): Promise<void> => {
             const status: ServiceStatus = {
                 api: await getStatus(`${REACT_APP_IAH_ENDPOINT}/api/status`),
-                steamApi: await getStatus(
-                    `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900`
-                ),
+                steamApi: await getStatus(`${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900`),
                 steamAccount: await getStatus(
                     `${REACT_APP_IAH_ENDPOINT}/api/steam/achieve?gameId=250900${
-                        steamDetails.steamUserId
-                            ? "&userId=" + steamDetails.steamUserId
-                            : ""
+                        steamDetails.steamUserId ? "&userId=" + steamDetails.steamUserId : ""
                     }`
                 ),
                 loading: false,
             };
 
             // Calculate if there's more than one failure, if no failures - reload
-            const failures = Object.keys(status).filter(
-                (key: string) => key !== "loading" && status[key] === false
-            ).length;
+            const failures = Object.keys(status).filter((key: string) => key !== "loading" && status[key] === false).length;
 
             if (!failures) {
                 window.location.reload();

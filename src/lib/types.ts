@@ -4,6 +4,12 @@
 export interface TableComponent {
     stage: number;
     currentPageData: CollatedData[];
+    filters: Filters;
+}
+
+export interface TableWidgets {
+    currentPageData: CollatedData[];
+    url: string;
 }
 
 export interface WikiComponent {
@@ -89,6 +95,7 @@ export interface Achievement {
     description: string;
     icon: string;
     icongray: string;
+    content: string;
 }
 
 export interface WikiData {
@@ -111,8 +118,11 @@ export interface Filters {
     query: string;
     collection: string[];
     collectionOpts: string[];
+    content: string[];
+    contentOpts: string[];
     pagination: number;
     paginationOpts: number[];
+    iconsOnly: boolean;
 }
 
 export interface Pages {
