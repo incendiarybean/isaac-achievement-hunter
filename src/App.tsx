@@ -12,6 +12,8 @@ const App = () => {
         version: 0,
     });
 
+    // console.log("76561198065815181");
+
     useEffect(() => {
         const checkAccount = async () => {
             await readFile("steamData.json")
