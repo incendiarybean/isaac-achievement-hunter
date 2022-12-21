@@ -170,7 +170,7 @@ const Filter = ({ collatedData, filters, filteredData, setFilteredData, setCurre
                     )}
                 </div>
 
-                <div hidden={!filter} className="animate-fadeIn absolute top-5 w-auto fade-in">
+                <div hidden={!filter} className="animate-fadeIn absolute top-7 w-auto fade-in">
                     <div className="text-sm my-2 bg-slate-100 border border-slate-300 dark:border-zinc-900 dark:bg-zinc-900 rounded p-4 w-56 shadow">
                         <input
                             className="border font-light placeholder:text-black dark:placeholder:text-white rounded w-full mb-3 px-2 p-1 dark:bg-slate-800 dark:text-white"

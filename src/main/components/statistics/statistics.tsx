@@ -9,7 +9,7 @@ const Statistics = ({ collatedData, steamDetails }: StatisticsComponent) => {
     useEffect(() => {
         setCompleted(Math.floor((collatedData.filter((data) => data.achieved === 1).length / collatedData.length) * 100));
     }, [collatedData]);
-    //76561198065815181
+
     return (
         <div>
             {steamDetails.steamUserId ? (
