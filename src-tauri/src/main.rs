@@ -21,7 +21,7 @@ fn main() {
 #[tauri::command]
 fn write_file(file_name: &str, file_content: &str) -> Result<bool, String> {
     let write = || -> Result<File, io::Error> {
-      let mut file = File::create("./data/".to_owned() + file_name)?;
+      let mut file = File::create(file_name)?;
       file.write_all(format!("{}", file_content).as_bytes())?;
       Ok(file)
     };
@@ -35,7 +35,7 @@ fn write_file(file_name: &str, file_content: &str) -> Result<bool, String> {
 #[tauri::command]
 fn read_file(file_name: &str) -> Result<String, String> {
     let read = || -> Result<String, io::Error> {
-      let mut file = File::open("./data/".to_owned() + file_name)?;
+      let mut file = File::open(file_name)?;
       let mut contents = String::new();
       file.read_to_string(&mut contents)?;
 
@@ -51,7 +51,7 @@ fn read_file(file_name: &str) -> Result<String, String> {
 #[tauri::command]
 fn remove_file(file_name: &str) -> Result<bool, String> {
     let remove = || -> Result<bool, io::Error> {
-      fs::remove_file("./data/".to_owned() + file_name)?;
+      fs::remove_file(file_name)?;
 
       Ok(true)
     };
@@ -65,7 +65,7 @@ fn remove_file(file_name: &str) -> Result<bool, String> {
 #[tauri::command]
 fn existing_file(file_name: &str) -> Result<bool, String> {
     let exists = || -> Result<bool, io::Error> {
-      let exists = Path::new(&("./data/".to_owned() + file_name)).try_exists()?;
+      let exists = Path::new(&(file_name)).try_exists()?;
 
       Ok(exists)
     };
