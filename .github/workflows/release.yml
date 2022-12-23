@@ -16,7 +16,7 @@ jobs:
       TAURI_PRIVATE_KEY: ${{ secrets.TAURI_KEY }}
       TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      REACT_APP_IAH_ENDPOINT: "https://dev.benweare.co.uk"
+      REACT_APP_IAH_ENDPOINT: "https://www.benweare.co.uk"
       TUARI_SIG_UBUNTU_PATH: ""
       TUARI_SIG_WINDOWS_PATH: ""
       GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
